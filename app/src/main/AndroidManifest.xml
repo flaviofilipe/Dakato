@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.win7.dakato">
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Activitys.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activitys.PedidosActivity"
+            android:label="@string/title_activity_pedidos"
+            android:parentActivityName=".Activitys.MenuInicialActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.win7.dakato.Activitys.MenuInicialActivity" />
+        </activity>
+        <activity android:name=".Activitys.MenuInicialActivity" />
+        <activity
+            android:name=".Activitys.CatalogoActivity"
+            android:label="@string/title_activity_catalogo"
+            android:parentActivityName=".Activitys.MenuInicialActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.win7.dakato.Activitys.MenuInicialActivity" />
+        </activity>
+        <activity
+            android:name=".Activitys.VerCatalogoActivity"
+            android:label="@string/title_activity_ver_catalogo"
+            android:parentActivityName=".Activitys.CatalogoActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.win7.dakato.Activitys.CatalogoActivity" />
+        </activity>
+        <activity
+            android:name=".Activitys.VerPedidoActivity"
+            android:label="@string/title_activity_ver_pedido"
+            android:parentActivityName=".Activitys.PedidosActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.win7.dakato.Activitys.PedidosActivity" />
+        </activity>
+        <activity
+            android:name=".Activitys.CadListaActivity"
+            android:label="@string/title_activity_cad_lista"
+            android:parentActivityName=".Activitys.PedidosActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.win7.dakato.Activitys.PedidosActivity" />
+        </activity>
+        <activity
+            android:name=".Activitys.AddItemActivity"
+            android:label="@string/title_activity_add_item"
+            android:parentActivityName=".Activitys.VerPedidoActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.win7.dakato.Activitys.VerPedidoActivity" />
+        </activity>
+    </application>
+
+</manifest>

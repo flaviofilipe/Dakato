@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">D\'Katto</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Login</string>
+    <string name="title_activity_principal">Pedidos</string>
+    <string name="title_activity_pedidos">Lista de Pedidos</string>
+    <string name="title_activity_catalogo">Catalogo</string>
+    <string name="title_activity_enviar_pedido">Enviar Pedido</string>
+    <string name="title_activity_ver_catalogo">Ver Catalogo</string>
+    <string name="title_activity_ver_pedido">Ver Pedido</string>
+    <string name="pedido">Lista de Pedidos</string>
+    <string name="title_activity_cad_lista">Nova Lista</string>
+    <string name="title_activity_add_item">AddItemActivity</string>
+
+</resources>

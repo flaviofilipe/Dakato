@@ -1,0 +1,20 @@
+package com.example.win7.dakato.Data;
+
+import android.provider.BaseColumns;
+
+/**
+ * Created by WIN7 on 30/05/2017.
+ */
+
+public class PedidoContract {
+    private PedidoContract(){}
+
+    public static abstract class PedidoEntry implements BaseColumns{
+        public static final String TABLE_NAME  = "pedidos";
+
+        public static final String _ID = "_id";
+        public static final String COLUMS_EMISSAO = "emissao";
+        public static final String COLUMS_STATUS = "status";
+        public static final String COLUMS_CPF = "cpf";
+    }
+}

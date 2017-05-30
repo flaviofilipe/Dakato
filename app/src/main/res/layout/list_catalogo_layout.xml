@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <ImageView
+        android:id="@+id/img_catalogo"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:srcCompat="@drawable/ic_logo_dakatto" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_referencia"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="ref" />
+
+        <TextView
+            android:id="@+id/txt_nome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Nome"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_preco"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="R$10,00" />
+    </LinearLayout>
+
+</LinearLayout>

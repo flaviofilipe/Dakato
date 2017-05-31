@@ -1,4 +1,4 @@
-package com.example.win7.dakato.Data;
+package com.example.win7.dakato.Model;
 
 import android.provider.BaseColumns;
 

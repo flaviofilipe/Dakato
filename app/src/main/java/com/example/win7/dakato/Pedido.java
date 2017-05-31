@@ -9,25 +9,24 @@ import java.util.Date;
 
 public class Pedido  implements Serializable {
 
-    private String id;
+    private int id;
     private String emissao;
     private String status;
     private String cpf;
-
-    public Pedido(String id, String emissao, String status, String cpf) {
-        this.id = id;
+/*
+    public Pedido(String emissao, String status, String cpf) {
         this.emissao = emissao;
         this.status = status;
         this.cpf = cpf;
     }
+*/
 
 
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

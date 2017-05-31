@@ -8,9 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.win7.dakato.Model.PedidoController;
 import com.example.win7.dakato.R;
 
 public class CadListaActivity extends AppCompatActivity {
@@ -30,15 +32,14 @@ public class CadListaActivity extends AppCompatActivity {
         btnCriar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView txtNewList = (TextView) findViewById(R.id.edt_newDesc);
-                String nomeLista = txtNewList.getText().toString();
-                if (nomeLista.isEmpty()) {
-                    Toast.makeText(CadListaActivity.this,"Insiria um nome na lista",Toast.LENGTH_SHORT).show();
-                }else {
+                    PedidoController crud = new PedidoController(getBaseContext());
+                    EditText txtLista = (EditText) findViewById(R.id.edt_lista);
+                    String lista = txtLista.getText().toString();
+                    String resultado;
+                    resultado = crud.inserePedido("31/05/2017","Status 1","0000");
                     Intent intent = new Intent(CadListaActivity.this, PedidosActivity.class);
                     startActivity(intent);
-                    Toast.makeText(CadListaActivity.this,"Lista criada com sucesso!",Toast.LENGTH_SHORT).show();
-                }
+                    Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
 
             }
         });

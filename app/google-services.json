@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "39621015789",
+    "firebase_url": "https://dkato-790c9.firebaseio.com",
+    "project_id": "dkato-790c9",
+    "storage_bucket": "dkato-790c9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:39621015789:android:899a612d0a257eb1",
+        "android_client_info": {
+          "package_name": "com.example.win7.dakato"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "39621015789-ekni5ivvd4e1i3dihfc2o0e1sof4jn1j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0yB98Rn3a-yTFvRL_UA4-Fs6hyQVxWuY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

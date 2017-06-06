@@ -2,9 +2,15 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_compartilhar"
+    android:id="@+id/menu_compartilhar"
+    android:icon="@drawable/ic_whatsapp"
+    android:orderInCategory="100"
+    android:title="Compartilhar"
+    app:showAsAction="always"></item>
+    <item
+        android:id="@+id/menu_deletar"
         android:icon="@drawable/ic_whatsapp"
         android:orderInCategory="100"
-        android:title="Compartilhar"
-        app:showAsAction="always"></item>
+        android:title="Deletar Lista"
+        app:showAsAction="collapseActionView"></item>
 </menu>

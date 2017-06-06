@@ -19,5 +19,7 @@ public class CatalogoContract {
         public static final String COLUMS_M = "m";
         public static final String COLUMS_GG = "gg";
 
+        public static final String SCRIPT_DEL_TABELA =  "DROP TABLE IF EXISTS " + TABLE_NAME;
+
     }
 }

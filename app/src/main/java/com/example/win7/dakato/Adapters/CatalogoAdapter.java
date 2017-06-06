@@ -1,6 +1,8 @@
 package com.example.win7.dakato.Adapters;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,47 +12,51 @@ import android.widget.TextView;
 
 import com.example.win7.dakato.Catalogo;
 import com.example.win7.dakato.R;
+import com.example.win7.dakato.ViewHolders.CatalogoViewHolder;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by WIN7 on 29/05/2017.
  */
 
-public class CatalogoAdapter  extends ArrayAdapter<Catalogo> {
+public class CatalogoAdapter extends RecyclerView.Adapter {
     private Context context;
-    private ArrayList<Catalogo> catalogo;
+    private List<Catalogo> catalogos;
 
-    public CatalogoAdapter(Context context,  ArrayList<Catalogo> catalogo) {
-        super(context, 0, catalogo);
+
+    public CatalogoAdapter(List<Catalogo> catalogo, Context context) {
+
         this.context = context;
-        this.catalogo = catalogo;
+        this.catalogos = catalogo;
     }
 
-    //Devolve view personalizada
-
-    public View getView(int position, View convertView, ViewGroup parent) {
-        //Pega a posicao do bjt q ta buscando
-        Catalogo catalogoPosicao = this.catalogo.get(position);
-
-        //Informa o layout
-        convertView = LayoutInflater.from(this.context).inflate(R.layout.list_catalogo_layout,null);
-
-        //Insere um inteiro
-        ImageView imgCatalogo = (ImageView) convertView.findViewById(R.id.img_catalogo);
-        imgCatalogo.setImageResource(catalogoPosicao.getImg());
 
 
-        TextView txtReferencia = (TextView) convertView.findViewById(R.id.txt_referencia);
-        txtReferencia.setText(catalogoPosicao.getReferencia());
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context)
+                .inflate(R.layout.list_catalogo_layout, parent, false);
+        CatalogoViewHolder holder = new CatalogoViewHolder(view);
+        return holder;
+    }
 
-        TextView txtNome = (TextView) convertView.findViewById(R.id.txt_nome);
-        txtNome.setText((CharSequence) catalogoPosicao.getDNome());
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+        CatalogoViewHolder holder = (CatalogoViewHolder) viewHolder;
+        Catalogo catalogo = catalogos.get(position);
+        holder.nome.setText(catalogo.getNome());
+        holder.img.setImageResource(Integer.parseInt(catalogo.getImg()));
+        //Picasso.with(context).load(catalogo.getImg()).into(holder.img);
+        holder.referencia.setText(catalogo.getReferencia());
+        holder.preco.setText(String.valueOf(catalogo.getPreco()));
+    }
 
-        TextView txtPreco = (TextView) convertView.findViewById(R.id.txt_preco);
-        txtPreco.setText(String.valueOf(catalogoPosicao.getPreco()));
-
-
-        return convertView;
+    @Override
+    public int getItemCount() {
+        //Retorna a quantidade de itens
+        return catalogos.size();
     }
 }

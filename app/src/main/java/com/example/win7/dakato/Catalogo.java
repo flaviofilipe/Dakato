@@ -1,5 +1,7 @@
 package com.example.win7.dakato;
 
+import android.widget.ImageView;
+
 import java.io.Serializable;
 
 /**
@@ -11,27 +13,22 @@ public class Catalogo implements Serializable {
     private String referencia;
     private String nome;
     private Double preco;
-    private int img;
-    private Boolean pp;
-    private Boolean p;
-    private Boolean m;
-    private Boolean g;
-    private Boolean gg;
+    private String img;
+    private String pp;
+    private String p;
+    private String m;
+    private String g;
+    private String gg;
 
-    public Catalogo(String id, String referencia, String nome, Double preco, int img, Boolean pp, Boolean p, Boolean m, Boolean g, Boolean gg) {
-        this.id = id;
-        this.referencia = referencia;
-        this.nome = nome;
-        this.preco = preco;
-        this.img = img;
-        this.pp = pp;
-        this.p = p;
-        this.m = m;
-        this.g = g;
-        this.gg = gg;
+    public ImageView getImagemUrl() {
+        return imagemUrl;
     }
 
+    public void setImagemUrl(ImageView imagemUrl) {
+        this.imagemUrl = imagemUrl;
+    }
 
+    public ImageView imagemUrl;
 
     public String getId() {
         return id;
@@ -49,7 +46,7 @@ public class Catalogo implements Serializable {
         this.referencia = referencia;
     }
 
-    public String getDNome() {
+    public String getNome() {
         return nome;
     }
 
@@ -65,51 +62,51 @@ public class Catalogo implements Serializable {
         this.preco = preco;
     }
 
-    public int getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(int img) {
+    public void setImg(String img) {
         this.img = img;
     }
 
-    public Boolean getPp() {
+    public String getPp() {
         return pp;
     }
 
-    public void setPp(Boolean pp) {
+    public void setPp(String pp) {
         this.pp = pp;
     }
 
-    public Boolean getP() {
+    public String getP() {
         return p;
     }
 
-    public void setP(Boolean p) {
+    public void setP(String p) {
         this.p = p;
     }
 
-    public Boolean getM() {
+    public String getM() {
         return m;
     }
 
-    public void setM(Boolean m) {
+    public void setM(String m) {
         this.m = m;
     }
 
-    public Boolean getG() {
+    public String getG() {
         return g;
     }
 
-    public void setG(Boolean g) {
+    public void setG(String g) {
         this.g = g;
     }
 
-    public Boolean getGg() {
+    public String getGg() {
         return gg;
     }
 
-    public void setGg(Boolean gg) {
+    public void setGg(String gg) {
         this.gg = gg;
     }
 }

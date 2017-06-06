@@ -2,14 +2,11 @@ package com.example.win7.dakato;
 
 import java.io.Serializable;
 
-/**
- * Created by WIN7 on 29/05/2017.
- */
 
 public class VerPedidoItens implements Serializable {
     private int id;
     private int pedido_id;
-    private int tbitemcatalogo_id;
+    private int itemcatalogo_id;
     private int pp;
     private int p;
     private int m;
@@ -17,10 +14,10 @@ public class VerPedidoItens implements Serializable {
     private int gg;
     private String obs;
 
-    public VerPedidoItens(int id, int pedido_id, int tbitemcatalogo_id, int pp, int p, int m, int g, int gg, String obs) {
+    public VerPedidoItens(int id, int pedido_id, int itemcatalogo_id, int pp, int p, int m, int g, int gg, String obs) {
         this.id = id;
         this.pedido_id = pedido_id;
-        this.tbitemcatalogo_id = tbitemcatalogo_id;
+        this.itemcatalogo_id = itemcatalogo_id;
         this.pp = pp;
         this.p = p;
         this.m = m;
@@ -46,11 +43,11 @@ public class VerPedidoItens implements Serializable {
     }
 
     public int getTbitemcatalogo_id() {
-        return tbitemcatalogo_id;
+        return itemcatalogo_id;
     }
 
     public void setTbitemcatalogo_id(int tbitemcatalogo_id) {
-        this.tbitemcatalogo_id = tbitemcatalogo_id;
+        this.itemcatalogo_id = tbitemcatalogo_id;
     }
 
     public int getPp() {

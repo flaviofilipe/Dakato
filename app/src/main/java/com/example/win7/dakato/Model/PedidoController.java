@@ -17,9 +17,11 @@ import java.util.List;
 public class PedidoController {
     private SQLiteDatabase db;
     private CreateDBHelper banco;
+    VerPedidoController vpExcluir;
 
     public PedidoController(Context context){
         banco = new CreateDBHelper(context);
+        vpExcluir = new VerPedidoController(context);
     }
 
     public String inserePedido(String emissao, String status, String cpf){
@@ -40,40 +42,7 @@ public class PedidoController {
             return "Registro Inserido com sucesso";
     }
 
-    public String excluiPedido(Pedido pedido){
-        long resultado;
-        db = banco.getWritableDatabase();
-        resultado = db.delete(PedidoContract.PedidoEntry.TABLE_NAME, PedidoContract.PedidoEntry.COLUMS_EMISSAO+" = ?",
-                new String[]{String.valueOf(pedido.getId())});
-        db.close();
-        if (resultado ==-1)
-            return "Erro ao excluir registro";
-        else
-            return "Registro excluido com sucesso";
-    }
 
-    /*
-    public List<Pedido> listaTodosPedidos(){
-        List<Pedido> listaPedidos = new ArrayList<Pedido>();
-        String query = "SELECT * FROM " + PedidoContract.PedidoEntry.TABLE_NAME;
-        db = banco.getWritableDatabase();
-        Cursor c = db.rawQuery(query, null);
-        if(c.moveToFirst()){
-            do{
-                Pedido pedido = new Pedido();
-                pedido.setId(Integer.parseInt(c.getString(0)));
-                pedido.setEmissao(c.getString(1));
-                pedido.setStatus(c.getString(2));
-                pedido.setCpf(c.getString(3));
-
-                listaPedidos.add(pedido);
-
-            }while (c.moveToNext());
-        }
-
-        return listaPedidos;
-    }
-    */
     public Cursor carregaDados(){
         Cursor cursor;
         String[] campos =  {
@@ -90,6 +59,48 @@ public class PedidoController {
         }
         db.close();
         return cursor;
+    }
+
+    public Cursor carregaDadoById(int id){
+        Cursor cursor;
+        String[] campos =  {
+                PedidoContract.PedidoEntry._ID,
+                PedidoContract.PedidoEntry.COLUMS_EMISSAO,
+                PedidoContract.PedidoEntry.COLUMS_STATUS,
+                PedidoContract.PedidoEntry.COLUMS_CPF
+        };
+        String where = PedidoContract.PedidoEntry._ID + "=" + id;
+        db = banco.getReadableDatabase();
+        cursor = db.query(PedidoContract.PedidoEntry._ID, campos, where, null, null, null, null, null);
+
+        if(cursor!=null){
+            cursor.moveToFirst();
+        }
+        db.close();
+        return cursor;
+    }
+
+
+    /*
+    public String excluiPedido(Pedido pedido){
+        long resultado;
+        db = banco.getWritableDatabase();
+        resultado = db.delete(PedidoContract.PedidoEntry.TABLE_NAME, PedidoContract.PedidoEntry._ID+" = ?",
+                new String[]{String.valueOf(pedido.getId())});
+        db.close();
+        if (resultado ==-1)
+            return "Erro ao excluir registro";
+        else
+            return "Registro excluido com sucesso";
+    }*/
+
+    public void excluiPedido(String id){
+        String where = PedidoContract.PedidoEntry._ID + "=" + id;
+        db = banco.getReadableDatabase();
+        db.delete(PedidoContract.PedidoEntry.TABLE_NAME,where,null);
+
+        vpExcluir.excluiVerPedidoByPedido(id);
+        db.close();
     }
 }
 

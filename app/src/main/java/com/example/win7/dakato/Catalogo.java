@@ -12,7 +12,7 @@ public class Catalogo implements Serializable {
     private String id;
     private String referencia;
     private String nome;
-    private Double preco;
+    private String preco;
     private String img;
     private String pp;
     private String p;
@@ -20,15 +20,6 @@ public class Catalogo implements Serializable {
     private String g;
     private String gg;
 
-    public ImageView getImagemUrl() {
-        return imagemUrl;
-    }
-
-    public void setImagemUrl(ImageView imagemUrl) {
-        this.imagemUrl = imagemUrl;
-    }
-
-    public ImageView imagemUrl;
 
     public String getId() {
         return id;
@@ -54,11 +45,11 @@ public class Catalogo implements Serializable {
         this.nome = nome;
     }
 
-    public Double getPreco() {
+    public String getPreco() {
         return preco;
     }
 
-    public void setPreco(Double preco) {
+    public void setPreco(String preco) {
         this.preco = preco;
     }
 

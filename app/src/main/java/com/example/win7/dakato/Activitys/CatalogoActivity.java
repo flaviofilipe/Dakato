@@ -27,7 +27,9 @@ import com.example.win7.dakato.Catalogo;
 import com.example.win7.dakato.Model.CatalogoContract;
 import com.example.win7.dakato.Model.CatalogoController;
 import com.example.win7.dakato.R;
+import com.example.win7.dakato.ViewHolders.CatalogoViewHolder;
 import com.firebase.client.Firebase;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.api.model.StringList;
 import com.google.firebase.database.ChildEventListener;
@@ -35,6 +37,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -70,14 +73,39 @@ public class CatalogoActivity extends AppCompatActivity {
             }
         });
 
+        /*
         final Catalogo catalogo1 = new Catalogo();
         catalogo1.setNome("aaa");
         catalogo1.setPreco(123.00);
         catalogo1.setReferencia("r123");
         catalogo1.setImg(String.valueOf(R.drawable.ic_logo_dakatto));
-        //final ImageView img = catalogo1.getImagemUrl();
+        */
+
+        //Recycler view + firebase
+        recyclerView = (RecyclerView) findViewById(R.id.rv_Catalogo);
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        FirebaseRecyclerAdapter mAdapter;
+
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://dkato-790c9.firebaseio.com/Itens");
+
+        //Lista os itens pela ordem nome
+        mAdapter = new FirebaseRecyclerAdapter<Catalogo, CatalogoViewHolder>(Catalogo.class, R.layout.list_catalogo_layout, CatalogoViewHolder.class, mRef.orderByChild("nome")) {
+            @Override
+            public void populateViewHolder(CatalogoViewHolder catalogoViewHolder, Catalogo cat, int position) {
+                catalogoViewHolder.setNome(cat.getNome());
+                catalogoViewHolder.setReferencia(cat.getReferencia());
+                catalogoViewHolder.setPreco(String.valueOf(cat.getPreco()));
+            }
+        };
+
+        //Insere no nome
+        recyclerView.setAdapter(mAdapter);
 
 
+        //============================
         /*Recebendo imagem firebase/picasso
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://dkato-790c9.appspot.com/").child("download.jpg");
@@ -93,20 +121,7 @@ public class CatalogoActivity extends AppCompatActivity {
             }
         });
         */
-        //RecyclerView
-        recyclerView = (RecyclerView) findViewById(R.id.rv_Catalogo);
 
-
-
-        List<Catalogo> c = new ArrayList<Catalogo>();
-        for(int i=0;i<=10;i++) {
-            c.add(catalogo1);
-        }
-
-        recyclerView.setAdapter(new CatalogoAdapter(c,this));
-        RecyclerView.LayoutManager layout = new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layout);
 
     }
     @Override
@@ -116,39 +131,6 @@ public class CatalogoActivity extends AppCompatActivity {
     }
 
 
-    public void listarCatalogo() {
-        CatalogoController crud = new CatalogoController(getBaseContext());
-        final Cursor cursor = crud.carregaDados();
-
-        String[] nomeCampos = new String[]{
-                CatalogoContract.CatalogoEntry.COLUMS_REFERENCIA,
-                CatalogoContract.CatalogoEntry.COLUMS_NOME,
-                CatalogoContract.CatalogoEntry.COLUMS_PRECO
-        };
-        int[] idViews = new int[]{R.id.txt_catReferencia, R.id.txt_catNome, R.id.txt_catPreco};
-
-        SimpleCursorAdapter adaptador = new SimpleCursorAdapter(getBaseContext(),
-                R.layout.list_catalogo_layout, cursor, nomeCampos, idViews, 0);
-        lv_catalogo = (ListView) findViewById(R.id.lv_pedidos);
-        lv_catalogo.setAdapter(adaptador);
-
-        lv_catalogo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                String codigo;
-                cursor.moveToPosition(position);
-                codigo = cursor.getString(cursor.getColumnIndexOrThrow(CatalogoContract.CatalogoEntry._ID));
-                Intent intent = new Intent(CatalogoActivity.this, VerCatalogoActivity.class);
-                //Passa param
-                intent.putExtra("codigo", codigo);
-                startActivity(intent);
-                finish();
-                //intent.putExtra(MainActivity.KEY_FILME, itemFilme);
-            }
-        });
-
-    }
 
 
 }

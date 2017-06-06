@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.example.win7.dakato"
 
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -40,6 +40,7 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:9.6.1'
     compile 'com.firebase:firebase-client-android:2.3.1'
     compile 'com.google.firebase:firebase-storage:9.6.1'
+    compile 'com.firebaseui:firebase-ui:0.4.3'
 
     compile 'com.squareup.picasso:picasso:2.5.2'
 

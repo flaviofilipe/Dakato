@@ -25,4 +25,16 @@ public class CatalogoViewHolder extends RecyclerView.ViewHolder {
         nome = (TextView) view.findViewById(R.id.txt_catNome);
         preco = (TextView) view.findViewById(R.id.txt_catPreco);
     }
+
+    public void setReferencia(String ref){
+        referencia.setText(ref);
+    }
+
+    public void setNome(String nomeV) {
+       nome.setText(nomeV);
+    }
+
+    public void setPreco(String p) {
+        preco.setText(p);
+    }
 }

@@ -32,6 +32,7 @@ public class VerPedidoActivity extends AppCompatActivity {
     PedidoController crud;
     String codigo;
     ListView lv_verPedidos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +49,13 @@ public class VerPedidoActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent intent = new Intent(VerPedidoActivity.this, AddItemActivity.class);
+                Intent intent = new Intent(VerPedidoActivity.this, CatalogoActivity.class);
+                intent.putExtra("codigo", codigo);
                 startActivity(intent);
-                */
+                finish();
 
+
+                /*
                 VerPedidoController inserir = new VerPedidoController(getBaseContext());
                 String resultado;
                 resultado = inserir.inserePedido(codigo,"3","5","3","7","1","2", "Observacoes sobre o produto");
@@ -61,7 +65,7 @@ public class VerPedidoActivity extends AppCompatActivity {
                 i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 i.putExtra("codigo", codigo);
                 startActivity(i);
-                finish();
+                finish();*/
 
             }
         });
@@ -72,20 +76,6 @@ public class VerPedidoActivity extends AppCompatActivity {
         //========== Decrlaracoes ===========
         lv_verPedidos = (ListView) findViewById(R.id.lv_verpedidos);
 
-
-        /*
-        //List view
-        ListView lv_verPedidos = (ListView) findViewById(R.id.lv_verpedidos);
-        //Add na lista
-        final ArrayList<VerPedidoItens> verPedido = new ArrayList<VerPedidoItens>();
-        VerPedidoItens pedido1 = new VerPedidoItens(1, 1, 3, 5, 0, 0, 1, 0, "teste");
-        for (int i = 0; i <= 10; i++) {
-            verPedido.add(pedido1);
-        }
-        VerPedidosItensAdapter verPedidosItensAdapter = new VerPedidosItensAdapter(this, verPedido);
-        lv_verPedidos.setAdapter(verPedidosItensAdapter);
-        //Fim list view
-        */
 
     }
 
@@ -106,7 +96,7 @@ public class VerPedidoActivity extends AppCompatActivity {
 
         };
         int[] idViews = new int[]{
-                R.id.txt_vp_id ,
+                R.id.txt_vp_id,
                 R.id.txt_pedidoId,
                 R.id.txt_vp_itemCatalogo,
                 R.id.txt_vp_pp,
@@ -115,7 +105,7 @@ public class VerPedidoActivity extends AppCompatActivity {
                 R.id.txt_vp_g,
                 R.id.txt_vp_gg,
                 R.id.txt_vp_obs
-                };
+        };
 
         SimpleCursorAdapter adaptador = new SimpleCursorAdapter(getBaseContext(),
                 R.layout.list_ver_pedido_layout, cursor, nomeCampos, idViews, 0);
@@ -156,7 +146,7 @@ public class VerPedidoActivity extends AppCompatActivity {
 
                 new AlertDialog.Builder(this)
                         .setTitle("Deletar lista")
-                        .setMessage("Tem certeza que pretende deletar a lista "+ codigo)
+                        .setMessage("Tem certeza que pretende deletar a lista " + codigo)
                         .setPositiveButton("sim",
                                 new DialogInterface.OnClickListener() {
                                     @Override
@@ -172,9 +162,6 @@ public class VerPedidoActivity extends AppCompatActivity {
                                 })
                         .setNegativeButton("não", null)
                         .show();
-
-
-
 
                 return true;
 

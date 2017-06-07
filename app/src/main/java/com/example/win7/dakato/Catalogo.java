@@ -4,9 +4,6 @@ import android.widget.ImageView;
 
 import java.io.Serializable;
 
-/**
- * Created by WIN7 on 29/05/2017.
- */
 
 public class Catalogo implements Serializable {
     private String id;

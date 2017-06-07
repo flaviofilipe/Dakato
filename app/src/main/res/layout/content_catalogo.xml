@@ -27,7 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:hint="Pesquisar"
-            android:layout_gravity="bottom"/>
+            android:layout_gravity="bottom"
+            android:focusable="true"
+            android:focusableInTouchMode="false" />
 
         <ImageButton
             android:id="@+id/btnPesquisar"

@@ -7,10 +7,22 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.win7.dakato.R;
+import com.squareup.picasso.Picasso;
 
 public class VerCatalogoActivity extends AppCompatActivity {
+
+    String[] item;
+
+    private TextView titulo;
+    private TextView referencia;
+    private TextView preco;
+    private TextView tamanho;
+    private ImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +41,24 @@ public class VerCatalogoActivity extends AppCompatActivity {
         });*/
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //Declaracoes
+        titulo = (TextView) findViewById(R.id.txt_titulo);
+        referencia = (TextView) findViewById(R.id.txt_referencia);
+        preco = (TextView) findViewById(R.id.txt_preco);
+        tamanho = (TextView) findViewById(R.id.txt_tamanho);
+        img = (ImageView) findViewById(R.id.img_verCatalogo);
+        //Fim declaracoes
+
+        //Recebe ID
+
+        Bundle b=this.getIntent().getExtras();
+        item = b.getStringArray("item");
+
+        titulo.setText(item[0]);
+        referencia.setText(item[1]);
+        preco.setText(item[2]);
+        Picasso.with(this).load(item[3]).fit().centerCrop().into(img);
     }
 
 }

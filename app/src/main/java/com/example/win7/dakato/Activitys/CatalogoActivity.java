@@ -12,7 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -44,14 +46,14 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CatalogoActivity extends AppCompatActivity {
 
     ImageButton btnPesquisar;
-    ListView lv_catalogo;
     RecyclerView recyclerView;
-
+    String codigo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,13 +75,8 @@ public class CatalogoActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        final Catalogo catalogo1 = new Catalogo();
-        catalogo1.setNome("aaa");
-        catalogo1.setPreco(123.00);
-        catalogo1.setReferencia("r123");
-        catalogo1.setImg(String.valueOf(R.drawable.ic_logo_dakatto));
-        */
+        //Recebe ID
+        codigo = this.getIntent().getStringExtra("codigo");
 
         //Recycler view + firebase
         recyclerView = (RecyclerView) findViewById(R.id.rv_Catalogo);
@@ -87,50 +84,89 @@ public class CatalogoActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         FirebaseRecyclerAdapter mAdapter;
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-
+        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://dkato-790c9.firebaseio.com/Itens");
+
 
         //Lista os itens pela ordem nome
         mAdapter = new FirebaseRecyclerAdapter<Catalogo, CatalogoViewHolder>(Catalogo.class, R.layout.list_catalogo_layout, CatalogoViewHolder.class, mRef.orderByChild("nome")) {
             @Override
-            public void populateViewHolder(CatalogoViewHolder catalogoViewHolder, Catalogo cat, int position) {
+            public void populateViewHolder(CatalogoViewHolder catalogoViewHolder, final Catalogo cat, int position) {
                 catalogoViewHolder.setNome(cat.getNome());
                 catalogoViewHolder.setReferencia(cat.getReferencia());
                 catalogoViewHolder.setPreco(String.valueOf(cat.getPreco()));
+                catalogoViewHolder.setImg(String.valueOf(cat.getImg()), CatalogoActivity.this);
+
+                final String nome = cat.getNome();
+                final String referencia = cat.getReferencia();
+                final String preco = cat.getPreco();
+                final String img = cat.getImg();
+
+                if (codigo == null) {
+                    catalogoViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //String[] item = {cat.getNome(),cat.getReferencia()};
+                            Intent i = new Intent(CatalogoActivity.this, VerCatalogoActivity.class);  //your class
+
+                            Bundle b = new Bundle();
+                            b.putStringArray("item", new String[]{nome, referencia, preco, img});
+                            i.putExtras(b);
+
+                            startActivity(i);
+
+                        }
+                    });
+                } else {
+                    catalogoViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //String[] item = {cat.getNome(),cat.getReferencia()};
+                            Intent i = new Intent(CatalogoActivity.this, AddItemActivity.class);  //your class
+
+
+                            Bundle b = new Bundle();
+                            b.putStringArray("item", new String[]{nome, referencia, preco, img});
+                            i.putExtras(b);
+                            i.putExtra("codigo", codigo);
+
+                            startActivity(i);
+
+                        }
+                    });
+                }
+
             }
+
         };
 
         //Insere no nome
         recyclerView.setAdapter(mAdapter);
 
-
-        //============================
-        /*Recebendo imagem firebase/picasso
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReferenceFromUrl("gs://dkato-790c9.appspot.com/").child("download.jpg");
-        //Pegar tamanho da tela
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        final int height = (displayMetrics.heightPixels - (displayMetrics.heightPixels/2));
-        final int width = (displayMetrics.widthPixels - 16);
-        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                //Picasso.with(CatalogoActivity.this).load(uri.toString()).resize(width,height).into(img);
-                catalogo1.setImg(String.valueOf(uri.toString()));
-            }
-        });
-        */
-
-
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_atualizar, menu);
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_atualizar:
+                super.onRestart();
+                Intent i = new Intent(CatalogoActivity.this, CatalogoActivity.class);  //your class
+                i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(i);
+                Toast.makeText(CatalogoActivity.this, "Atualizando", Toast.LENGTH_SHORT).show();
+                finish();
+                return true;
 
-
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }

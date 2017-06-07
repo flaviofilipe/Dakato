@@ -52,8 +52,6 @@ import static java.security.AccessController.getContext;
 public class PedidosActivity extends AppCompatActivity {
 
     ListView lv_pedidos;
-    PedidoController db = new PedidoController(this);
-    ArrayList<Pedido> itemPedido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +80,6 @@ public class PedidosActivity extends AppCompatActivity {
                 startActivity(i);
                 finish();
 
-
             }
 
         });
@@ -90,59 +87,13 @@ public class PedidosActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //============== *Fim Botao Flutuante* ===================
 
-        //arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list_of_rooms);
-
-        //listView.setAdapter(arrayAdapter);
-
         //============== Declaracoes =============================
         final TextView txtDtEmissao = (TextView) findViewById(R.id.txtDataEmissao);
         lv_pedidos = (ListView) findViewById(R.id.lv_pedidos);
-        /*
-        itemPedido = new ArrayList<Pedido>();
-        Pedido pedido1 = new Pedido();
-        Pedido pedido2 = new Pedido();
-        final PedidosAdapter pedidosAdapter = new PedidosAdapter(this, itemPedido);
-        lv_pedidos.setAdapter(pedidosAdapter);
-        */
-        //============== Fim Declaracoes ==========================
 
-        /*============== Insere na lista ===========================
-        pedido1.setEmissao("02-06-2017");
-        pedido1.setStatus("Ativo");
-        itemPedido.add(pedido1);
-        itemPedido.add(pedido2);
-        //============== Fim Insere na lista =======================
-        */
         listarPedidos();
 
 
-
-
-        /*============== Lista dados Firebase ======================
-
-        root.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Set<String> set = new HashSet<String>();
-                Iterator i = dataSnapshot.getChildren().iterator();
-
-                while (i.hasNext()){
-                    set.add(((DataSnapshot)i.next()).getKey());
-
-                }
-
-                list_of_rooms.clear();
-                arrayAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-        //============== Fim Lista dados Firebase ===================*/
     }
 
 

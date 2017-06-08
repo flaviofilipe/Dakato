@@ -9,6 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.win7.dakato.R;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +18,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!FirebaseApp.getApps(this).isEmpty())
+        {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        }
         setContentView(R.layout.activity_main);
 
         Button btnAcessar = (Button) findViewById(R.id.btnAcessar);
@@ -27,12 +33,14 @@ public class MainActivity extends AppCompatActivity {
                 TextView txtCpf = (TextView) findViewById(R.id.txtCpf);
                 String cpf = txtCpf.getText().toString();
                 if(cpf.equals("")){
-                    Intent intent = new Intent(MainActivity.this,MenuInicialActivity.class);
-                    startActivity(intent);
-                    Toast.makeText(MainActivity.this, "Bem Vindo"+txtCpf.getText(), Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(MainActivity.this, "Usuário inválido. Por favor solicite o cadastro."+txtCpf.getText(),
+                    Toast.makeText(MainActivity.this, "Preencha com seu número de CPF.",
                             Toast.LENGTH_LONG).show();
+                }else{
+
+                    Intent intent = new Intent(MainActivity.this,MenuInicialActivity.class);
+                    intent.putExtra("cpf", cpf);
+                    startActivity(intent);
+                    Toast.makeText(MainActivity.this, "Bem Vindo"+cpf, Toast.LENGTH_SHORT).show();
 
                 }
             }

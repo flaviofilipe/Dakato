@@ -33,6 +33,7 @@ import com.example.win7.dakato.ViewHolders.CatalogoViewHolder;
 import com.firebase.client.Firebase;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.api.model.StringList;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -58,6 +59,7 @@ public class CatalogoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_catalogo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -75,6 +77,9 @@ public class CatalogoActivity extends AppCompatActivity {
             }
         });
 
+
+        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
         //Recebe ID
         codigo = this.getIntent().getStringExtra("codigo");
 
@@ -82,11 +87,19 @@ public class CatalogoActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.rv_Catalogo);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+    }
+
+    @Override
+    protected void onStart() {
+
+        super.onStart();
+        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         FirebaseRecyclerAdapter mAdapter;
 
-        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://dkato-790c9.firebaseio.com/Itens");
 
+        //FirebaseDatabase.getInstance().goOffline();
 
         //Lista os itens pela ordem nome
         mAdapter = new FirebaseRecyclerAdapter<Catalogo, CatalogoViewHolder>(Catalogo.class, R.layout.list_catalogo_layout, CatalogoViewHolder.class, mRef.orderByChild("nome")) {
@@ -135,15 +148,13 @@ public class CatalogoActivity extends AppCompatActivity {
                         }
                     });
                 }
-
             }
-
         };
 
         //Insere no nome
         recyclerView.setAdapter(mAdapter);
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

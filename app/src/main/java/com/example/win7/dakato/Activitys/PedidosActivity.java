@@ -1,6 +1,7 @@
 package com.example.win7.dakato.Activitys;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -38,6 +39,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -52,6 +54,8 @@ import static java.security.AccessController.getContext;
 public class PedidosActivity extends AppCompatActivity {
 
     ListView lv_pedidos;
+    String cpf;
+    String data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,24 +66,25 @@ public class PedidosActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         //============== Fim Padrao ==============================
 
+        cpf = this.getIntent().getStringExtra("cpf");
+        data = pegaData();
+
         //============== Botao Flutuante =========================
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent intent = new Intent(PedidosActivity.this, CadListaActivity.class);
-                startActivity(intent);
-                */
+
                 PedidoController inserir = new PedidoController(getBaseContext());
                 String resultado;
-                resultado = inserir.inserePedido("31/05/2017", "Status 1", "0000");
+
+                resultado = inserir.inserePedido(data, "Solicitado", cpf);
                 Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
 
                 Intent i = new Intent(PedidosActivity.this, PedidosActivity.class);  //your class
-                i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                i.putExtra("cpf", cpf);
                 startActivity(i);
                 finish();
-
             }
 
         });
@@ -93,10 +98,15 @@ public class PedidosActivity extends AppCompatActivity {
 
         listarPedidos();
 
-
     }
 
 
+    private String pegaData() {
+        long date = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("d/M/yyyy");
+        String dateString = sdf.format(date);
+        return dateString;
+    }
 
     //================== Menu Top ==============================
     @Override
@@ -113,6 +123,7 @@ public class PedidosActivity extends AppCompatActivity {
                 super.onRestart();
                 Intent i = new Intent(PedidosActivity.this, PedidosActivity.class);  //your class
                 i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                i.putExtra("cpf", cpf);
                 startActivity(i);
                 Toast.makeText(PedidosActivity.this, "Atualizando", Toast.LENGTH_SHORT).show();
                 finish();
@@ -124,12 +135,9 @@ public class PedidosActivity extends AppCompatActivity {
     }
     //================== Fim Menu Top ============================
 
-
-
-
     //================= Lista pedidos BD ========================
     public void listarPedidos() {
-        PedidoController crud = new PedidoController(getBaseContext());
+        final PedidoController crud = new PedidoController(getBaseContext());
         final Cursor cursor = crud.carregaDados();
 
         String[] nomeCampos = new String[]{PedidoContract.PedidoEntry.COLUMS_EMISSAO,
@@ -151,11 +159,40 @@ public class PedidosActivity extends AppCompatActivity {
                 Intent intent = new Intent(PedidosActivity.this, VerPedidoActivity.class);
                 //Passa param
                 intent.putExtra("codigo", codigo);
+                intent.putExtra("cpf", cpf);
                 startActivity(intent);
-                //intent.putExtra(MainActivity.KEY_FILME, itemFilme);
             }
         });
 
+        lv_pedidos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final PedidoController excluir = new PedidoController(getBaseContext());
+                final String codigo;
+                cursor.moveToPosition(position);
+                codigo = cursor.getString(cursor.getColumnIndexOrThrow(PedidoContract.PedidoEntry._ID));
+
+                new AlertDialog.Builder(PedidosActivity.this)
+                        .setTitle("Deletar lista")
+                        .setMessage("Tem certeza que pretende deletar a lista " + codigo)
+                        .setPositiveButton("sim",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        excluir.excluiPedido(codigo);
+                                        Toast.makeText(getApplicationContext(), "Lista excluida com sucesso", Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(PedidosActivity.this, PedidosActivity.class);  //your class
+                                        intent.putExtra("cpf", cpf);
+                                        startActivity(intent);
+
+                                        finish();
+                                    }
+                                })
+                        .setNegativeButton("não", null)
+                        .show();
+                return true;
+            }
+        });
     }
     //================= Fim Lista pedidos BD ====================
 

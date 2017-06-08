@@ -71,7 +71,25 @@ public class PedidoController {
         };
         String where = PedidoContract.PedidoEntry._ID + "=" + id;
         db = banco.getReadableDatabase();
-        cursor = db.query(PedidoContract.PedidoEntry._ID, campos, where, null, null, null, null, null);
+        cursor = db.query(PedidoContract.PedidoEntry.TABLE_NAME, campos, where, null, null, null, null, null);
+
+        if(cursor!=null){
+            cursor.moveToFirst();
+        }
+        db.close();
+        return cursor;
+    }
+    public Cursor carregaDadoByData(String data){
+        Cursor cursor;
+        String[] campos =  {
+                PedidoContract.PedidoEntry._ID,
+                PedidoContract.PedidoEntry.COLUMS_EMISSAO,
+                PedidoContract.PedidoEntry.COLUMS_STATUS,
+                PedidoContract.PedidoEntry.COLUMS_CPF
+        };
+        String where = PedidoContract.PedidoEntry.COLUMS_EMISSAO + "=" + data;
+        db = banco.getReadableDatabase();
+        cursor = db.query(PedidoContract.PedidoEntry.TABLE_NAME, campos, where, null, null, null, null, null);
 
         if(cursor!=null){
             cursor.moveToFirst();
@@ -80,19 +98,6 @@ public class PedidoController {
         return cursor;
     }
 
-
-    /*
-    public String excluiPedido(Pedido pedido){
-        long resultado;
-        db = banco.getWritableDatabase();
-        resultado = db.delete(PedidoContract.PedidoEntry.TABLE_NAME, PedidoContract.PedidoEntry._ID+" = ?",
-                new String[]{String.valueOf(pedido.getId())});
-        db.close();
-        if (resultado ==-1)
-            return "Erro ao excluir registro";
-        else
-            return "Registro excluido com sucesso";
-    }*/
 
     public void excluiPedido(String id){
         String where = PedidoContract.PedidoEntry._ID + "=" + id;

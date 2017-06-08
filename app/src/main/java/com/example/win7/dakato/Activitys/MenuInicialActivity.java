@@ -18,12 +18,14 @@ public class MenuInicialActivity extends AppCompatActivity {
         Button btnPedido = (Button) findViewById(R.id.btnPedido);
         Button btnCatalogo = (Button) findViewById(R.id.btnCatalogo);
         Button btnEnviarPedido = (Button) findViewById(R.id.btnEnviarPedido);
+        final String cpf = this.getIntent().getStringExtra("cpf");
 
         //Pedido
         btnPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuInicialActivity.this,PedidosActivity.class);
+                intent.putExtra("cpf", cpf);
                 startActivity(intent);
             }
         });
@@ -33,6 +35,7 @@ public class MenuInicialActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuInicialActivity.this,CatalogoActivity.class);
+                intent.putExtra("cpf", cpf);
                 startActivity(intent);
             }
         });

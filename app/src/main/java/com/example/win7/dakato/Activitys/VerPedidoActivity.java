@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class VerPedidoActivity extends AppCompatActivity {
 
-    Cursor cursor;
+    String cpf;
     PedidoController crud;
     String codigo;
     ListView lv_verPedidos;
@@ -44,6 +44,7 @@ public class VerPedidoActivity extends AppCompatActivity {
         //Recebe ID
         codigo = this.getIntent().getStringExtra("codigo");
         crud = new PedidoController(getBaseContext());
+        cpf = this.getIntent().getStringExtra("cpf");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -55,18 +56,6 @@ public class VerPedidoActivity extends AppCompatActivity {
                 finish();
 
 
-                /*
-                VerPedidoController inserir = new VerPedidoController(getBaseContext());
-                String resultado;
-                resultado = inserir.inserePedido(codigo,"3","5","3","7","1","2", "Observacoes sobre o produto");
-                Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
-
-                Intent i = new Intent(VerPedidoActivity.this, VerPedidoActivity.class);  //your class
-                i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                i.putExtra("codigo", codigo);
-                startActivity(i);
-                finish();*/
-
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -75,7 +64,6 @@ public class VerPedidoActivity extends AppCompatActivity {
 
         //========== Decrlaracoes ===========
         lv_verPedidos = (ListView) findViewById(R.id.lv_verpedidos);
-
 
     }
 
@@ -93,7 +81,6 @@ public class VerPedidoActivity extends AppCompatActivity {
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_G,
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_GG,
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS
-
         };
         int[] idViews = new int[]{
                 R.id.txt_vp_id,
@@ -111,23 +98,52 @@ public class VerPedidoActivity extends AppCompatActivity {
                 R.layout.list_ver_pedido_layout, cursor, nomeCampos, idViews, 0);
         lv_verPedidos = (ListView) findViewById(R.id.lv_verpedidos);
         lv_verPedidos.setAdapter(adaptador);
-/*
         lv_verPedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String codigo;
                 cursor.moveToPosition(position);
-                codigo = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry._ID));
-                Intent intent = new Intent(VerPedidoActivity.this, VerPedidoActivity.class);
-                //Passa param
-                intent.putExtra("codigo", codigo);
-                startActivity(intent);
-                finish();
-                //intent.putExtra(MainActivity.KEY_FILME, itemFilme);
+                String id_item = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry._ID));
+                final String pedido_id = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_PEDIDO_ID));
+                final String catalogo_id = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_ITEMCATALOGO_ID));
+                final String obs = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS));
+                final String p = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_P));
+                final String pp = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_PP));
+                final String m = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_M));
+                final String g = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_G));
+                final String gg = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_GG));
+
+
+                new AlertDialog.Builder(VerPedidoActivity.this)
+                        .setTitle("Compartilhar")
+                        .setMessage("Deseja compartinhar este item? " + cursor.getCount())
+                        .setPositiveButton("sim",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        //Compartilha no whats
+                                        // cria a intent e define a ação
+                                        Intent intent = new Intent(Intent.ACTION_SEND);
+                                        // tipo de conteúdo da intent
+                                        intent.setType("text/plain");
+                                        // string a ser enviada para outra intent
+                                        intent.putExtra(Intent.EXTRA_TEXT, "Nova solicitação \nCPF: " + cpf
+                                                + " \nCatalogo id: " + catalogo_id
+                                                + " \nPP: " + pp
+                                                + " \nP: " + p
+                                                + " \nM: " + m
+                                                + " \nG: " + g
+                                                + " \nGG: " + gg
+                                                + " \nObs: " + obs
+                                        );
+                                        // inicia a intent
+                                        startActivity(intent);
+                                    }
+                                })
+                        .setNegativeButton("não", null)
+                        .show();
             }
         });
-        */
     }
 
     @Override
@@ -135,7 +151,6 @@ public class VerPedidoActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_ver_pedido, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -162,12 +177,44 @@ public class VerPedidoActivity extends AppCompatActivity {
                                 })
                         .setNegativeButton("não", null)
                         .show();
-
+                return true;
+            case R.id.menu_compartilhar:
+                shareText();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void shareText() {
+        ArrayList<String> lista = new ArrayList<String>();
+
+        VerPedidoController crud = new VerPedidoController(getBaseContext());
+        final Cursor cursor = crud.carregaDadoByPedidos(codigo);
+        int quant = cursor.getCount();
+        Cursor item;
+        String id[] = new String[0];
+
+        String itemcatalogo_id = cursor.getString(cursor.getColumnIndex(VerPedidosContract.VerPedidosEntry.COLUMS_VP_ITEMCATALOGO_ID));
+        String obs = cursor.getString(cursor.getColumnIndex(VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS));
+
+        Toast.makeText(VerPedidoActivity.this, String.valueOf(lista), Toast.LENGTH_SHORT).show();
+
+
+        /*Compartilha no whats
+        // cria a intent e define a ação
+        Intent intent = new Intent( Intent.ACTION_SEND );
+        // tipo de conteúdo da intent
+        intent.setType( "text/plain" );
+        // string a ser enviada para outra intent
+        intent.putExtra( Intent.EXTRA_TEXT, "Mensagem teste pelo app. Pedido id: "+pedido_id
+                + " Catalogo id: "+itemcatalogo_id
+                + " Obs: " +obs
+        );
+        // inicia a intent
+        startActivity( intent );
+        */
     }
 
 }

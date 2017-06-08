@@ -76,11 +76,12 @@ public class VerPedidoController {
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_P,
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_M,
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_G,
-                VerPedidosContract.VerPedidosEntry.COLUMS_VP_GG
+                VerPedidosContract.VerPedidosEntry.COLUMS_VP_GG,
+                VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS
         };
         String where = VerPedidosContract.VerPedidosEntry._ID + "=" + id;
         db = banco.getReadableDatabase();
-        cursor = db.query(VerPedidosContract.VerPedidosEntry._ID, campos, where, null, null, null, null, null);
+        cursor = db.query(VerPedidosContract.VerPedidosEntry.TABLE_NAME, campos, where, null, null, null, null, null);
 
         if(cursor!=null){
             cursor.moveToFirst();
@@ -101,9 +102,10 @@ public class VerPedidoController {
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_GG,
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS
         };
+
         String where = VerPedidosContract.VerPedidosEntry.COLUMS_VP_PEDIDO_ID + "=" + id;
         db = banco.getReadableDatabase();
-        cursor = db.query(VerPedidosContract.VerPedidosEntry.TABLE_NAME, campos, where, null, null, null, null, null);
+        cursor = db.query(VerPedidosContract.VerPedidosEntry.TABLE_NAME,campos, where, null, null, null, null, null);
 
         if(cursor!=null){
             cursor.moveToFirst();

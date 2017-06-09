@@ -160,7 +160,7 @@ tools:showIn="@layout/activity_add_item">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:orientation="horizontal">
                 <LinearLayout
                     android:layout_width="0dp"
@@ -179,7 +179,7 @@ tools:showIn="@layout/activity_add_item">
                     <EditText
                         android:id="@+id/edt_p"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="4"
                         android:inputType="number" />
                 </LinearLayout>
@@ -199,7 +199,7 @@ tools:showIn="@layout/activity_add_item">
                     <EditText
                         android:id="@+id/edt_pp"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="4"
                         android:inputType="number" />
                 </LinearLayout>
@@ -207,7 +207,7 @@ tools:showIn="@layout/activity_add_item">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:orientation="horizontal">
                 <LinearLayout
                     android:layout_width="0dp"
@@ -225,7 +225,7 @@ tools:showIn="@layout/activity_add_item">
                     <EditText
                         android:id="@+id/edt_m"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="4"
                         android:inputType="number" />
                 </LinearLayout>
@@ -245,7 +245,7 @@ tools:showIn="@layout/activity_add_item">
                     <EditText
                         android:id="@+id/edt_g"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="4"
                         android:inputType="number" />
                 </LinearLayout>
@@ -253,7 +253,7 @@ tools:showIn="@layout/activity_add_item">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:orientation="horizontal">
                 <LinearLayout
                     android:layout_width="0dp"
@@ -266,12 +266,12 @@ tools:showIn="@layout/activity_add_item">
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="P" />
+                        android:text="GG" />
 
                     <EditText
                         android:id="@+id/edt_GG"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="4"
                         android:inputType="number" />
                 </LinearLayout>

@@ -55,6 +55,7 @@ public class CatalogoActivity extends AppCompatActivity {
     ImageButton btnPesquisar;
     RecyclerView recyclerView;
     String codigo;
+    String cpf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +67,16 @@ public class CatalogoActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Recebe ID
+        codigo = this.getIntent().getStringExtra("codigo");
+        cpf = this.getIntent().getStringExtra("cpf");
+
         btnPesquisar = (ImageButton) findViewById(R.id.btnPesquisar);
         btnPesquisar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(CatalogoActivity.this, PedidosActivity.class);  //your class
-                i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                i.putExtra("cpf", cpf);
                 startActivity(i);
                 finish();
             }
@@ -80,8 +85,7 @@ public class CatalogoActivity extends AppCompatActivity {
 
         //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
-        //Recebe ID
-        codigo = this.getIntent().getStringExtra("codigo");
+
 
         //Recycler view + firebase
         recyclerView = (RecyclerView) findViewById(R.id.rv_Catalogo);
@@ -124,6 +128,7 @@ public class CatalogoActivity extends AppCompatActivity {
 
                             Bundle b = new Bundle();
                             b.putStringArray("item", new String[]{nome, referencia, preco, img});
+                            i.putExtra("cpf", cpf);
                             i.putExtras(b);
 
                             startActivity(i);
@@ -137,11 +142,11 @@ public class CatalogoActivity extends AppCompatActivity {
                             //String[] item = {cat.getNome(),cat.getReferencia()};
                             Intent i = new Intent(CatalogoActivity.this, AddItemActivity.class);  //your class
 
-
                             Bundle b = new Bundle();
                             b.putStringArray("item", new String[]{nome, referencia, preco, img});
                             i.putExtras(b);
                             i.putExtra("codigo", codigo);
+                            i.putExtra("cpf", cpf);
 
                             startActivity(i);
 
@@ -172,6 +177,12 @@ public class CatalogoActivity extends AppCompatActivity {
                 i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(i);
                 Toast.makeText(CatalogoActivity.this, "Atualizando", Toast.LENGTH_SHORT).show();
+                finish();
+                return true;
+            case android.R.id.home:
+                Intent intent = new Intent(CatalogoActivity.this, MenuInicialActivity.class);
+                intent.putExtra("cpf", cpf);
+                startActivity(intent);
                 finish();
                 return true;
 

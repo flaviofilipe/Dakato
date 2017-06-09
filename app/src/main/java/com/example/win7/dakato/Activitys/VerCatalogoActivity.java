@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +24,8 @@ public class VerCatalogoActivity extends AppCompatActivity {
     private TextView preco;
     private TextView tamanho;
     private ImageView img;
+
+    String cpf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class VerCatalogoActivity extends AppCompatActivity {
         preco = (TextView) findViewById(R.id.txt_preco);
         tamanho = (TextView) findViewById(R.id.txt_tamanho);
         img = (ImageView) findViewById(R.id.img_verCatalogo);
+        cpf = this.getIntent().getStringExtra("cpf");
         //Fim declaracoes
 
         //Recebe ID
@@ -59,6 +63,22 @@ public class VerCatalogoActivity extends AppCompatActivity {
         referencia.setText(item[1]);
         preco.setText(item[2]);
         Picasso.with(this).load(item[3]).fit().centerCrop().into(img);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(VerCatalogoActivity.this, CatalogoActivity.class);
+                intent.putExtra("cpf", cpf);
+                startActivity(intent);
+                finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

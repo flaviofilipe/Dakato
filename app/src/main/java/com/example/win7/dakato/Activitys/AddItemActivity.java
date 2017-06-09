@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 public class AddItemActivity extends AppCompatActivity {
 
     String codigo;
+    String cpf;
     String[] item;
     private TextView titulo;
     private TextView referencia;
@@ -65,6 +66,7 @@ public class AddItemActivity extends AppCompatActivity {
         //Recebe ID
 
         codigo = this.getIntent().getStringExtra("codigo");
+        cpf = this.getIntent().getStringExtra("cpf");
         Bundle b=this.getIntent().getExtras();
         item = b.getStringArray("item");
 
@@ -93,6 +95,7 @@ public class AddItemActivity extends AppCompatActivity {
 
                 Intent i = new Intent(AddItemActivity.this, VerPedidoActivity.class);  //your class
                 i.putExtra("codigo", codigo);
+                i.putExtra("cpf", cpf);
                 startActivity(i);
                 finish();
             }

@@ -40,14 +40,12 @@ public class VerPedidoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_pedido);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-
         //Recebe ID
         codigo = this.getIntent().getStringExtra("codigo");
         crud = new PedidoController(getBaseContext());
         cpf = this.getIntent().getStringExtra("cpf");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -55,9 +53,9 @@ public class VerPedidoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(VerPedidoActivity.this, CatalogoActivity.class);
                 intent.putExtra("codigo", codigo);
+                intent.putExtra("cpf", cpf);
                 startActivity(intent);
                 finish();
-
 
             }
         });
@@ -203,9 +201,9 @@ public class VerPedidoActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         excluir.excluiPedido(codigo);
-                                        Toast.makeText(getApplicationContext(), "Lista excluida com sucesso", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), "Lista excluida com sucesso", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(VerPedidoActivity.this, PedidosActivity.class);  //your class
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        intent.putExtra("cpf", cpf);
                                         startActivity(intent);
 
                                         finish();
@@ -216,6 +214,12 @@ public class VerPedidoActivity extends AppCompatActivity {
                 return true;
             case R.id.menu_compartilhar:
                 shareText();
+                return true;
+            case android.R.id.home:
+                Intent intent = new Intent(VerPedidoActivity.this, PedidosActivity.class);
+                intent.putExtra("cpf", cpf);
+                startActivity(intent);
+                finish();
                 return true;
 
             default:
@@ -237,24 +241,28 @@ public class VerPedidoActivity extends AppCompatActivity {
         String dados = "";
 
 
-        do {
-            itemcatalogo_id = cursor.getString(cursor.getColumnIndex(VerPedidosContract.VerPedidosEntry.COLUMS_VP_ITEMCATALOGO_ID));
-            p = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_P));
-            pp = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_PP));
-            m = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_M));
-            g = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_G));
-            gg = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_GG));
-            obs = cursor.getString(cursor.getColumnIndex(VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS));
+        if(cursor.moveToFirst()) {
+            do {
+                itemcatalogo_id = cursor.getString(cursor.getColumnIndex(VerPedidosContract.VerPedidosEntry.COLUMS_VP_ITEMCATALOGO_ID));
+                p = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_P));
+                pp = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_PP));
+                m = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_M));
+                g = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_G));
+                gg = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_GG));
+                obs = cursor.getString(cursor.getColumnIndex(VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS));
 
-            dados += "Item: " + itemcatalogo_id
-                    + "\nP: " + p
-                    + "\nPP: " + pp
-                    + "\nM: " + m
-                    + "\nG: " + g
-                    + "\nGG: " + gg
-                    + "\nObs: " + obs + "\n------------\n";
+                dados += "Item: " + itemcatalogo_id
+                        + "\nP: " + p
+                        + "\nPP: " + pp
+                        + "\nM: " + m
+                        + "\nG: " + g
+                        + "\nGG: " + gg
+                        + "\nObs: " + obs + "\n------------\n";
+            }
+            while (cursor.moveToNext());
+        }else{
+            dados = "Lista vazia.";
         }
-        while (cursor.moveToNext());
 
 
         final String finalDados = dados;

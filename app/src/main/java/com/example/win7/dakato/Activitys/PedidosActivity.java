@@ -89,6 +89,7 @@ public class PedidosActivity extends AppCompatActivity {
 
         });
 
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //============== *Fim Botao Flutuante* ===================
 
@@ -126,6 +127,12 @@ public class PedidosActivity extends AppCompatActivity {
                 i.putExtra("cpf", cpf);
                 startActivity(i);
                 Toast.makeText(PedidosActivity.this, "Atualizando", Toast.LENGTH_SHORT).show();
+                finish();
+                return true;
+            case android.R.id.home:
+                Intent intent = new Intent(PedidosActivity.this, MenuInicialActivity.class);
+                intent.putExtra("cpf", cpf);
+                startActivity(intent);
                 finish();
                 return true;
 
@@ -175,12 +182,12 @@ public class PedidosActivity extends AppCompatActivity {
                 new AlertDialog.Builder(PedidosActivity.this)
                         .setTitle("Deletar lista")
                         .setMessage("Tem certeza que pretende deletar a lista " + codigo)
-                        .setPositiveButton("sim",
+                        .setPositiveButton("Deletar",
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         excluir.excluiPedido(codigo);
-                                        Toast.makeText(getApplicationContext(), "Lista excluida com sucesso", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), "Lista excluida com sucesso", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(PedidosActivity.this, PedidosActivity.class);  //your class
                                         intent.putExtra("cpf", cpf);
                                         startActivity(intent);
@@ -188,7 +195,7 @@ public class PedidosActivity extends AppCompatActivity {
                                         finish();
                                     }
                                 })
-                        .setNegativeButton("não", null)
+                        .setNegativeButton("Cancelar", null).setIcon(android.R.drawable.ic_menu_delete)
                         .show();
                 return true;
             }

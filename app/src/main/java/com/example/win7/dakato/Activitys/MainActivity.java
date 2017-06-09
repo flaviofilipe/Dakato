@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button btnAcessar = (Button) findViewById(R.id.btnAcessar);
-        TextView txtCadastro = (TextView) findViewById(R.id.txtCadastro);
 
         btnAcessar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this,MenuInicialActivity.class);
                     intent.putExtra("cpf", cpf);
                     startActivity(intent);
-                    Toast.makeText(MainActivity.this, "Bem Vindo"+cpf, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Bem Vindo", Toast.LENGTH_SHORT).show();
 
                 }
             }

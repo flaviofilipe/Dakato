@@ -24,7 +24,10 @@ import com.example.win7.dakato.Model.VerPedidosContract;
 import com.example.win7.dakato.R;
 import com.example.win7.dakato.VerPedidoItens;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class VerPedidoActivity extends AppCompatActivity {
 
@@ -98,6 +101,39 @@ public class VerPedidoActivity extends AppCompatActivity {
                 R.layout.list_ver_pedido_layout, cursor, nomeCampos, idViews, 0);
         lv_verPedidos = (ListView) findViewById(R.id.lv_verpedidos);
         lv_verPedidos.setAdapter(adaptador);
+
+        lv_verPedidos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final VerPedidoController excluir = new VerPedidoController(getBaseContext());
+                cursor.moveToPosition(position);
+                final String idItem = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry._ID));
+
+                new AlertDialog.Builder(VerPedidoActivity.this)
+                        .setTitle("Deletar Item")
+                        .setMessage("Tem certeza que pretende o item" + idItem)
+                        .setPositiveButton("Deletar",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        excluir.excluiVerPedidoById(idItem);
+                                        Toast.makeText(getApplicationContext(), "Pedido excluido com sucesso", Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(VerPedidoActivity.this, VerPedidoActivity.class);  //your class
+                                        intent.putExtra("cpf", cpf);
+                                        intent.putExtra("codigo", codigo);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+
+                                        finish();
+                                    }
+                                })
+                        .setNegativeButton("Cancelar", null).setIcon(android.R.drawable.ic_menu_delete)
+                        .show();
+
+                return true;
+            }
+        });
+
         lv_verPedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -117,7 +153,7 @@ public class VerPedidoActivity extends AppCompatActivity {
                 new AlertDialog.Builder(VerPedidoActivity.this)
                         .setTitle("Compartilhar")
                         .setMessage("Deseja compartinhar este item? " + cursor.getCount())
-                        .setPositiveButton("sim",
+                        .setPositiveButton("Compartilhar",
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -140,7 +176,7 @@ public class VerPedidoActivity extends AppCompatActivity {
                                         startActivity(intent);
                                     }
                                 })
-                        .setNegativeButton("não", null)
+                        .setNegativeButton("Cancelar", null).setIcon(android.R.drawable.ic_menu_share)
                         .show();
             }
         });
@@ -175,7 +211,7 @@ public class VerPedidoActivity extends AppCompatActivity {
                                         finish();
                                     }
                                 })
-                        .setNegativeButton("não", null)
+                        .setNegativeButton("não", null).setIcon(android.R.drawable.ic_menu_delete)
                         .show();
                 return true;
             case R.id.menu_compartilhar:
@@ -188,33 +224,79 @@ public class VerPedidoActivity extends AppCompatActivity {
     }
 
     private void shareText() {
-        ArrayList<String> lista = new ArrayList<String>();
-
         VerPedidoController crud = new VerPedidoController(getBaseContext());
         final Cursor cursor = crud.carregaDadoByPedidos(codigo);
-        int quant = cursor.getCount();
-        Cursor item;
-        String id[] = new String[0];
+        String itemcatalogo_id;
 
-        String itemcatalogo_id = cursor.getString(cursor.getColumnIndex(VerPedidosContract.VerPedidosEntry.COLUMS_VP_ITEMCATALOGO_ID));
-        String obs = cursor.getString(cursor.getColumnIndex(VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS));
+        String obs;
+        String p;
+        String pp;
+        String m;
+        String g;
+        String gg;
+        String dados = "";
 
-        Toast.makeText(VerPedidoActivity.this, String.valueOf(lista), Toast.LENGTH_SHORT).show();
+
+        do {
+            itemcatalogo_id = cursor.getString(cursor.getColumnIndex(VerPedidosContract.VerPedidosEntry.COLUMS_VP_ITEMCATALOGO_ID));
+            p = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_P));
+            pp = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_PP));
+            m = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_M));
+            g = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_G));
+            gg = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_GG));
+            obs = cursor.getString(cursor.getColumnIndex(VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS));
+
+            dados += "Item: " + itemcatalogo_id
+                    + "\nP: " + p
+                    + "\nPP: " + pp
+                    + "\nM: " + m
+                    + "\nG: " + g
+                    + "\nGG: " + gg
+                    + "\nObs: " + obs + "\n------------\n";
+        }
+        while (cursor.moveToNext());
 
 
-        /*Compartilha no whats
+        final String finalDados = dados;
+        new AlertDialog.Builder(VerPedidoActivity.this)
+                .setTitle("Compartilhar Lista")
+                .setMessage("Lista de produtos\n"
+                        + "Cpf:" +cpf+"\n"
+                        +dados).setPositiveButton("Compartilhar",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Compartilha no whats
+                        // cria a intent e define a ação
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        // tipo de conteúdo da intent
+                        intent.setType("text/plain");
+                        // string a ser enviada para outra intent
+                        intent.putExtra(Intent.EXTRA_TEXT, "Lista de produtos\n"
+                                + "Cpf:" +cpf+"\n"
+                                +finalDados
+                        );
+                        // inicia a intent
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("Cancelar", null).setIcon(android.R.drawable.ic_menu_share)
+                .show();
+
+
+        /*
+        //Compartilha no whats
         // cria a intent e define a ação
-        Intent intent = new Intent( Intent.ACTION_SEND );
+        Intent intent = new Intent(Intent.ACTION_SEND);
         // tipo de conteúdo da intent
-        intent.setType( "text/plain" );
+        intent.setType("text/plain");
         // string a ser enviada para outra intent
-        intent.putExtra( Intent.EXTRA_TEXT, "Mensagem teste pelo app. Pedido id: "+pedido_id
-                + " Catalogo id: "+itemcatalogo_id
-                + " Obs: " +obs
+        intent.putExtra(Intent.EXTRA_TEXT, dados
         );
         // inicia a intent
-        startActivity( intent );
+        startActivity(intent);
         */
+
     }
 
 }

@@ -114,7 +114,7 @@ public class VerPedidoController {
         return cursor;
     }
 
-    public void excluiVerPedidoById(int id){
+    public void excluiVerPedidoById(String id){
         String where = VerPedidosContract.VerPedidosEntry._ID + "=" + id;
         db = banco.getReadableDatabase();
         db.delete(VerPedidosContract.VerPedidosEntry.TABLE_NAME,where,null);

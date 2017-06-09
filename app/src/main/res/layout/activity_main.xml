@@ -53,8 +53,8 @@
                 android:id="@+id/txtCpf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="CPF"
-                android:inputType="text" />
+                android:hint="CPF (Apenas números)"
+                android:inputType="number" />
 
             <Button
                 android:id="@+id/btnAcessar"

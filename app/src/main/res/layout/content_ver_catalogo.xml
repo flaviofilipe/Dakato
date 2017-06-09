@@ -57,7 +57,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:background="@android:color/background_dark">
+                        android:background="@color/colorPrimary">
 
                         <TextView
                             android:id="@+id/textView"

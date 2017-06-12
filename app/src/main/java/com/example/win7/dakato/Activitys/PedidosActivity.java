@@ -78,7 +78,7 @@ public class PedidosActivity extends AppCompatActivity {
                 PedidoController inserir = new PedidoController(getBaseContext());
                 String resultado;
 
-                resultado = inserir.inserePedido(data, "Solicitado", cpf);
+                resultado = inserir.inserePedido(data, cpf);
                 Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG).show();
 
                 Intent i = new Intent(PedidosActivity.this, PedidosActivity.class);  //your class
@@ -94,7 +94,6 @@ public class PedidosActivity extends AppCompatActivity {
         //============== *Fim Botao Flutuante* ===================
 
         //============== Declaracoes =============================
-        final TextView txtDtEmissao = (TextView) findViewById(R.id.txtDataEmissao);
         lv_pedidos = (ListView) findViewById(R.id.lv_pedidos);
 
         listarPedidos();
@@ -148,8 +147,8 @@ public class PedidosActivity extends AppCompatActivity {
         final Cursor cursor = crud.carregaDados();
 
         String[] nomeCampos = new String[]{PedidoContract.PedidoEntry.COLUMS_EMISSAO,
-                PedidoContract.PedidoEntry.COLUMS_STATUS};
-        int[] idViews = new int[]{R.id.txt_emissao, R.id.txt_status};
+                PedidoContract.PedidoEntry._ID};
+        int[] idViews = new int[]{R.id.txt_emissao, R.id.txt_id};
 
         SimpleCursorAdapter adaptador = new SimpleCursorAdapter(getBaseContext(),
                 R.layout.list_pedido_layout, cursor, nomeCampos, idViews, 0);

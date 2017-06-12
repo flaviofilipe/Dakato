@@ -39,9 +39,6 @@ public class PedidosAdapter extends ArrayAdapter<Pedido> {
         TextView txtEmissao = (TextView) convertView.findViewById(R.id.txt_emissao);
         txtEmissao.setText(pedidoPosicao.getEmissao());
 
-        TextView txtStatus = (TextView) convertView.findViewById(R.id.txt_status);
-        txtStatus.setText((CharSequence) pedidoPosicao.getStatus());
-
         return convertView;
     }
 }

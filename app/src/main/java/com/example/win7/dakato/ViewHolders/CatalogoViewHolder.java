@@ -34,7 +34,7 @@ public class CatalogoViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setReferencia(String ref) {
-        referencia.setText(ref);
+        referencia.setText("Ref:"+ref);
     }
 
     public void setNome(String nomeV) {
@@ -42,7 +42,7 @@ public class CatalogoViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setPreco(String p) {
-        preco.setText(p);
+        preco.setText("R$"+p);
     }
 
     public void setImg(String i, Context context) {

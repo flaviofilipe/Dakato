@@ -17,6 +17,16 @@ public class Catalogo implements Serializable {
     private String g;
     private String gg;
 
+    public String getTamanhos() {
+        return tamanhos;
+    }
+
+    public void setTamanhos(String tamanhos) {
+        this.tamanhos = tamanhos;
+    }
+
+    private String tamanhos;
+
 
     public String getId() {
         return id;

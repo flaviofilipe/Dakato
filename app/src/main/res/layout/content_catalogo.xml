@@ -23,13 +23,15 @@
         android:layout_gravity="center">
 
         <EditText
+            android:id="@+id/edt_pesquisar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:hint="Pesquisar"
+            android:hint="Digite a referência"
             android:layout_gravity="bottom"
+            android:inputType="number"
             android:focusable="true"
-            android:focusableInTouchMode="false" />
+            android:focusableInTouchMode="true" />
 
         <ImageButton
             android:id="@+id/btnPesquisar"

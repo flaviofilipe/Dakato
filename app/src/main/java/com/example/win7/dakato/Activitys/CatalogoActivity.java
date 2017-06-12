@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -56,6 +57,9 @@ public class CatalogoActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     String codigo;
     String cpf;
+    EditText edtPesquisar;
+    FirebaseRecyclerAdapter mAdapter;
+    DatabaseReference mRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,25 +76,13 @@ public class CatalogoActivity extends AppCompatActivity {
         cpf = this.getIntent().getStringExtra("cpf");
 
         btnPesquisar = (ImageButton) findViewById(R.id.btnPesquisar);
-        btnPesquisar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(CatalogoActivity.this, PedidosActivity.class);  //your class
-                i.putExtra("cpf", cpf);
-                startActivity(i);
-                finish();
-            }
-        });
-
-
-        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-
-
+        edtPesquisar = (EditText) findViewById(R.id.edt_pesquisar);
 
         //Recycler view + firebase
         recyclerView = (RecyclerView) findViewById(R.id.rv_Catalogo);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://dkato-790c9.firebaseio.com/ITENS");
 
     }
 
@@ -98,26 +90,44 @@ public class CatalogoActivity extends AppCompatActivity {
     protected void onStart() {
 
         super.onStart();
-        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        FirebaseRecyclerAdapter mAdapter;
+        listaItensFirebase();
 
-        DatabaseReference mRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://dkato-790c9.firebaseio.com/Itens");
 
-        //FirebaseDatabase.getInstance().goOffline();
+        btnPesquisar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String pesquisa = edtPesquisar.getText().toString();
+                if (pesquisa.equals("")) {
+                    listaItensFirebase();
+                    Toast.makeText(CatalogoActivity.this, "Vazio", Toast.LENGTH_SHORT);
+                }else{
+                    procurarItensFirebase(pesquisa);
+                }
+            }
+        });
+
+
+    }
+
+    private void procurarItensFirebase(String pesquisa) {
+
 
         //Lista os itens pela ordem nome
-        mAdapter = new FirebaseRecyclerAdapter<Catalogo, CatalogoViewHolder>(Catalogo.class, R.layout.list_catalogo_layout, CatalogoViewHolder.class, mRef.orderByChild("nome")) {
+        mAdapter = new FirebaseRecyclerAdapter<Catalogo, CatalogoViewHolder>(Catalogo.class, R.layout.list_catalogo_layout, CatalogoViewHolder.class, mRef.orderByChild("referencia").startAt(pesquisa)) {
             @Override
             public void populateViewHolder(CatalogoViewHolder catalogoViewHolder, final Catalogo cat, int position) {
-                catalogoViewHolder.setNome(cat.getNome());
-                catalogoViewHolder.setReferencia(cat.getReferencia());
-                catalogoViewHolder.setPreco(String.valueOf(cat.getPreco()));
-                catalogoViewHolder.setImg(String.valueOf(cat.getImg()), CatalogoActivity.this);
+
 
                 final String nome = cat.getNome();
                 final String referencia = cat.getReferencia();
                 final String preco = cat.getPreco();
                 final String img = cat.getImg();
+                final String tamanhos = cat.getTamanhos();
+
+                catalogoViewHolder.setNome(nome);
+                catalogoViewHolder.setReferencia(String.valueOf(referencia));
+                catalogoViewHolder.setPreco(String.valueOf(preco));
+                catalogoViewHolder.setImg(String.valueOf(img), CatalogoActivity.this);
 
                 if (codigo == null) {
                     catalogoViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +137,7 @@ public class CatalogoActivity extends AppCompatActivity {
                             Intent i = new Intent(CatalogoActivity.this, VerCatalogoActivity.class);  //your class
 
                             Bundle b = new Bundle();
-                            b.putStringArray("item", new String[]{nome, referencia, preco, img});
+                            b.putStringArray("item", new String[]{nome, referencia, preco, img, tamanhos});
                             i.putExtra("cpf", cpf);
                             i.putExtras(b);
 
@@ -143,7 +153,65 @@ public class CatalogoActivity extends AppCompatActivity {
                             Intent i = new Intent(CatalogoActivity.this, AddItemActivity.class);  //your class
 
                             Bundle b = new Bundle();
-                            b.putStringArray("item", new String[]{nome, referencia, preco, img});
+                            b.putStringArray("item", new String[]{nome, referencia, preco, img, tamanhos});
+                            i.putExtras(b);
+                            i.putExtra("codigo", codigo);
+                            i.putExtra("cpf", cpf);
+
+                            startActivity(i);
+
+                        }
+                    });
+                }
+            }
+        };
+
+        //Insere no nome
+        recyclerView.setAdapter(mAdapter);
+    }
+
+    private void listaItensFirebase() {
+
+        //Lista os itens pela ordem nome
+        mAdapter = new FirebaseRecyclerAdapter<Catalogo, CatalogoViewHolder>(Catalogo.class, R.layout.list_catalogo_layout, CatalogoViewHolder.class, mRef.orderByChild("nome")) {
+            @Override
+            public void populateViewHolder(CatalogoViewHolder catalogoViewHolder, final Catalogo cat, int position) {
+                catalogoViewHolder.setNome(cat.getNome());
+                catalogoViewHolder.setReferencia(cat.getReferencia());
+                catalogoViewHolder.setPreco(String.valueOf(cat.getPreco()));
+                catalogoViewHolder.setImg(String.valueOf(cat.getImg()), CatalogoActivity.this);
+
+                final String nome = cat.getNome();
+                final String referencia = cat.getReferencia();
+                final String preco = cat.getPreco();
+                final String img = cat.getImg();
+                final String tamanhos = cat.getTamanhos();
+
+                if (codigo == null) {
+                    catalogoViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //String[] item = {cat.getNome(),cat.getReferencia()};
+                            Intent i = new Intent(CatalogoActivity.this, VerCatalogoActivity.class);  //your class
+
+                            Bundle b = new Bundle();
+                            b.putStringArray("item", new String[]{nome, referencia, preco, img, tamanhos});
+                            i.putExtra("cpf", cpf);
+                            i.putExtras(b);
+
+                            startActivity(i);
+
+                        }
+                    });
+                } else {
+                    catalogoViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //String[] item = {cat.getNome(),cat.getReferencia()};
+                            Intent i = new Intent(CatalogoActivity.this, AddItemActivity.class);  //your class
+
+                            Bundle b = new Bundle();
+                            b.putStringArray("item", new String[]{nome, referencia, preco, img, tamanhos});
                             i.putExtras(b);
                             i.putExtra("codigo", codigo);
                             i.putExtra("cpf", cpf);
@@ -176,7 +244,6 @@ public class CatalogoActivity extends AppCompatActivity {
                 Intent i = new Intent(CatalogoActivity.this, CatalogoActivity.class);  //your class
                 i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(i);
-                Toast.makeText(CatalogoActivity.this, "Atualizando", Toast.LENGTH_SHORT).show();
                 finish();
                 return true;
             case android.R.id.home:

@@ -10,7 +10,7 @@ import android.util.Log;
  */
 
 public class CreateDBHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "dakato.db";
 
     public CreateDBHelper(Context context) {
@@ -23,8 +23,7 @@ public class CreateDBHelper extends SQLiteOpenHelper {
                 "(" +
                 PedidoContract.PedidoEntry._ID              + " INTEGER PRIMARY KEY,"   +
                 PedidoContract.PedidoEntry.COLUMS_CPF       + " TEXT NOT NULL, "        +
-                PedidoContract.PedidoEntry.COLUMS_EMISSAO   + " TEXT NOT NULL, "        +
-                PedidoContract.PedidoEntry.COLUMS_STATUS    + " TEXT NOT NULL "         +
+                PedidoContract.PedidoEntry.COLUMS_EMISSAO   + " TEXT NOT NULL "        +
                 "); ";
 
                 /*
@@ -57,39 +56,6 @@ public class CreateDBHelper extends SQLiteOpenHelper {
                 ;
         Log.i("sql",createSqlVerPedidos);
 
-        String query1 = "CREATE TABLE pedidos\n" +
-                "                (\n" +
-                "                _id INTEGER PRIMARY KEY,\n" +
-                "                cpf TEXT NOT NULL, \n" +
-                "                emissao TEXT NOT NULL,\n" +
-                "                status TEXT NOT NULL\n" +
-                "                ); \n" +
-                "\n" +
-                "                \n" +
-                "                CREATE TABLE catalogo\n" +
-                "                (\n" +
-                "                _id INTEGER PRIMARY KEY,\n" +
-                "                referencia TEXT NOT NULL, \n" +
-                "                nome TEXT NOT NULL, \n" +
-                "                preco REAL NOT NULL, \n" +
-                "                img TEXT , \n" +
-                "               pp TEXT ,\n" +
-                "                p TEXT ,\n" +
-                "                g TEXT ,\n" +
-                "                gg TEXT,\n" +
-                "                m TEXT); \n" +
-                "\n" +
-                "                CREATE TABLE verpedidos \n" +
-                "                (\n" +
-                "               _id INTEGER PRIMARY KEY,\n" +
-                "              pedido_id TEXT NOT NULL, \n" +
-                "                itemcatalogo_id TEXT NOT NULL, \n" +
-                "                pp TEXT, \n" +
-                "                p TEXT, \n" +
-                "                m TEXT, \n" +
-                "                g TEXT, \n" +
-                "                gg TEXT,\n" +
-                "                obs TEXT);";
         db.execSQL(createSqlPedidos);
         db.execSQL(createSqlVerPedidos);
 

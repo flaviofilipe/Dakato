@@ -24,13 +24,12 @@ public class PedidoController {
         vpExcluir = new VerPedidoController(context);
     }
 
-    public String inserePedido(String emissao, String status, String cpf){
+    public String inserePedido(String emissao, String cpf){
         ContentValues valores = new ContentValues();
         long resultado;
 
         db = banco.getWritableDatabase();
         valores.put(PedidoContract.PedidoEntry.COLUMS_EMISSAO, emissao);
-        valores.put(PedidoContract.PedidoEntry.COLUMS_STATUS, status);
         valores.put(PedidoContract.PedidoEntry.COLUMS_CPF, cpf);
 
         resultado = db.insert(PedidoContract.PedidoEntry.TABLE_NAME, null, valores);
@@ -48,7 +47,7 @@ public class PedidoController {
         String[] campos =  {
                 PedidoContract.PedidoEntry._ID,
                 PedidoContract.PedidoEntry.COLUMS_EMISSAO,
-                PedidoContract.PedidoEntry.COLUMS_STATUS,
+                //PedidoContract.PedidoEntry.COLUMS_STATUS,
                 PedidoContract.PedidoEntry.COLUMS_CPF
         };
         db = banco.getReadableDatabase();
@@ -66,7 +65,7 @@ public class PedidoController {
         String[] campos =  {
                 PedidoContract.PedidoEntry._ID,
                 PedidoContract.PedidoEntry.COLUMS_EMISSAO,
-                PedidoContract.PedidoEntry.COLUMS_STATUS,
+                //PedidoContract.PedidoEntry.COLUMS_STATUS,
                 PedidoContract.PedidoEntry.COLUMS_CPF
         };
         String where = PedidoContract.PedidoEntry._ID + "=" + id;
@@ -84,7 +83,7 @@ public class PedidoController {
         String[] campos =  {
                 PedidoContract.PedidoEntry._ID,
                 PedidoContract.PedidoEntry.COLUMS_EMISSAO,
-                PedidoContract.PedidoEntry.COLUMS_STATUS,
+                //PedidoContract.PedidoEntry.COLUMS_STATUS,
                 PedidoContract.PedidoEntry.COLUMS_CPF
         };
         String where = PedidoContract.PedidoEntry.COLUMS_EMISSAO + "=" + data;

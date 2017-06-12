@@ -14,7 +14,7 @@ public class PedidoContract {
 
         public static final String _ID = "_id";
         public static final String COLUMS_EMISSAO = "emissao";
-        public static final String COLUMS_STATUS = "status";
+        //public static final String COLUMS_STATUS = "status";
         public static final String COLUMS_CPF = "cpf";
 
 

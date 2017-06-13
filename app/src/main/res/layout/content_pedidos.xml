@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Para adicionar uma nova lista selecione o botão '+' no canto inferior direito"
+        android:text="@string/alerta_pedidos"
         android:background="@color/colorAviso"
         android:textColor="@color/buttonTextColor"
         android:gravity="center"/>

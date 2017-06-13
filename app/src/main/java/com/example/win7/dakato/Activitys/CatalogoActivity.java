@@ -23,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.win7.dakato.Adapters.CatalogoAdapter;
@@ -32,6 +33,7 @@ import com.example.win7.dakato.Model.CatalogoController;
 import com.example.win7.dakato.R;
 import com.example.win7.dakato.ViewHolders.CatalogoViewHolder;
 import com.firebase.client.Firebase;
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
@@ -45,6 +47,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -58,7 +61,7 @@ public class CatalogoActivity extends AppCompatActivity {
     String codigo;
     String cpf;
     EditText edtPesquisar;
-    FirebaseRecyclerAdapter mAdapter;
+    FirebaseListAdapter mAdapter;
     DatabaseReference mRef;
 
     @Override
@@ -78,10 +81,11 @@ public class CatalogoActivity extends AppCompatActivity {
         btnPesquisar = (ImageButton) findViewById(R.id.btnPesquisar);
         edtPesquisar = (EditText) findViewById(R.id.edt_pesquisar);
 
-        //Recycler view + firebase
+        /*Recycler view + firebase
         recyclerView = (RecyclerView) findViewById(R.id.rv_Catalogo);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        */
         mRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://dkato-790c9.firebaseio.com/ITENS");
 
     }
@@ -111,7 +115,63 @@ public class CatalogoActivity extends AppCompatActivity {
 
     private void procurarItensFirebase(String pesquisa) {
 
+        final ListView mListView = (ListView) findViewById(R.id.lv_catalogo);
+        mAdapter = new FirebaseListAdapter<Catalogo>(this,Catalogo.class,R.layout.list_catalogo_layout,mRef.orderByChild("referencia").startAt(pesquisa)){
 
+            @Override
+            protected void populateView(View v, Catalogo model, int position) {
+
+                final ImageView imgCatalogo = (ImageView) v.findViewById(R.id.img_catalogo);
+                final TextView txtReferencia = (TextView) v.findViewById(R.id.txt_catReferencia);
+                final TextView txtNome = (TextView) v.findViewById(R.id.txt_catNome);
+                final TextView txtPpreco = (TextView) v.findViewById(R.id.txt_catPreco);
+
+                final String nome = model.getNome();
+                final String referencia = model.getReferencia();
+                final String preco = model.getPreco();
+                final String img = model.getImg();
+                final String tamanhos = model.getTamanhos();
+
+                txtReferencia.setText(model.getReferencia());
+                txtNome.setText(model.getNome());
+                Picasso.with(CatalogoActivity.this).load(model.getImg()).fit().centerCrop().into(imgCatalogo);
+                txtPpreco.setText(model.getPreco());
+
+                if (codigo == null) {
+                    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent i = new Intent(CatalogoActivity.this, VerCatalogoActivity.class);  //your class
+
+                            Bundle b = new Bundle();
+                            b.putStringArray("item", new String[]{nome, referencia, preco, img, tamanhos});
+                            i.putExtra("cpf", cpf);
+                            i.putExtras(b);
+
+                            startActivity(i);
+                        }
+                    });
+                } else {
+                    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent i = new Intent(CatalogoActivity.this, AddItemActivity.class);  //your class
+
+                            Bundle b = new Bundle();
+                            b.putStringArray("item", new String[]{nome, referencia, preco, img, tamanhos});
+                            i.putExtras(b);
+                            i.putExtra("codigo", codigo);
+                            i.putExtra("cpf", cpf);
+
+                            startActivity(i);
+                        }
+                    });
+                }
+            }
+        };
+        mListView.setAdapter(mAdapter);
+
+        /*
         //Lista os itens pela ordem nome
         mAdapter = new FirebaseRecyclerAdapter<Catalogo, CatalogoViewHolder>(Catalogo.class, R.layout.list_catalogo_layout, CatalogoViewHolder.class, mRef.orderByChild("referencia").startAt(pesquisa)) {
             @Override
@@ -168,16 +228,77 @@ public class CatalogoActivity extends AppCompatActivity {
 
         //Insere no nome
         recyclerView.setAdapter(mAdapter);
+        */
     }
 
     private void listaItensFirebase() {
 
-        //Lista os itens pela ordem nome
+
+        final ListView mListView = (ListView) findViewById(R.id.lv_catalogo);
+        mAdapter = new FirebaseListAdapter<Catalogo>(this,Catalogo.class,R.layout.list_catalogo_layout,mRef.orderByChild("nome")){
+
+            @Override
+            protected void populateView(View v, Catalogo model, int position) {
+
+                final ImageView imgCatalogo = (ImageView) v.findViewById(R.id.img_catalogo);
+                final TextView txtReferencia = (TextView) v.findViewById(R.id.txt_catReferencia);
+                final TextView txtNome = (TextView) v.findViewById(R.id.txt_catNome);
+                final TextView txtPpreco = (TextView) v.findViewById(R.id.txt_catPreco);
+
+                final String nome = model.getNome();
+                final String referencia = model.getReferencia();
+                final String preco = model.getPreco();
+                final String img = model.getImg();
+                final String tamanhos = model.getTamanhos();
+
+                txtReferencia.setText(model.getReferencia());
+                txtNome.setText(model.getNome());
+
+                Picasso.with(CatalogoActivity.this).load(model.getImg()).into(imgCatalogo);
+                txtPpreco.setText(model.getPreco());
+
+                if (codigo == null) {
+                    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent i = new Intent(CatalogoActivity.this, VerCatalogoActivity.class);  //your class
+
+                            Bundle b = new Bundle();
+                            b.putStringArray("item", new String[]{nome, referencia, preco, img, tamanhos});
+                            i.putExtra("cpf", cpf);
+                            i.putExtras(b);
+
+                            startActivity(i);
+                            finish();
+                        }
+                    });
+                } else {
+                    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent i = new Intent(CatalogoActivity.this, AddItemActivity.class);  //your class
+
+                            Bundle b = new Bundle();
+                            b.putStringArray("item", new String[]{nome, referencia, preco, img, tamanhos});
+                            i.putExtras(b);
+                            i.putExtra("codigo", codigo);
+                            i.putExtra("cpf", cpf);
+
+                            startActivity(i);
+                            finish();
+                        }
+                    });
+                }
+            }
+        };
+        mListView.setAdapter(mAdapter);
+
+        /*Lista os itens pela ordem nome
         mAdapter = new FirebaseRecyclerAdapter<Catalogo, CatalogoViewHolder>(Catalogo.class, R.layout.list_catalogo_layout, CatalogoViewHolder.class, mRef.orderByChild("nome")) {
             @Override
             public void populateViewHolder(CatalogoViewHolder catalogoViewHolder, final Catalogo cat, int position) {
                 catalogoViewHolder.setNome(cat.getNome());
-                catalogoViewHolder.setReferencia(cat.getReferencia());
+                catalogoViewHolder.setReferencia(String.valueOf(cat.getReferencia()));
                 catalogoViewHolder.setPreco(String.valueOf(cat.getPreco()));
                 catalogoViewHolder.setImg(String.valueOf(cat.getImg()), CatalogoActivity.this);
 
@@ -226,6 +347,7 @@ public class CatalogoActivity extends AppCompatActivity {
 
         //Insere no nome
         recyclerView.setAdapter(mAdapter);
+        */
     }
 
 

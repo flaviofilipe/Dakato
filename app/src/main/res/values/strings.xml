@@ -12,5 +12,7 @@
     <string name="pedido">Lista de Pedidos</string>
     <string name="title_activity_cad_lista">Nova Lista</string>
     <string name="title_activity_add_item">AddItemActivity</string>
+    <string name="alerta_catalogo">Caso as imagens não apareça selecione o botão atualizar e verifique sua conexão.</string>
+    <string name="alerta_pedidos">Para adicionar uma nova lista selecione o botão \'+\' no canto inferior direito</string>
 
 </resources>

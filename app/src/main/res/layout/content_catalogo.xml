@@ -8,11 +8,19 @@
     tools:context="com.example.win7.dakato.Activitys.CatalogoActivity"
     tools:showIn="@layout/activity_catalogo"
     android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/alerta_catalogo"
+        android:background="@color/colorAviso"
+        android:textColor="@color/buttonTextColor"
+        android:gravity="center"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="10dp">
+
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -44,18 +52,19 @@
 
 </ScrollView>
 
+        <!--
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_Catalogo"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+            -->
 
 
-        <!--
         <ListView
             android:id="@+id/lv_catalogo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="7"></ListView>
-            -->
+
     </LinearLayout>
 </LinearLayout>

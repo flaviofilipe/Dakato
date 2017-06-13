@@ -13,10 +13,8 @@ import com.example.win7.dakato.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.squareup.picasso.Picasso;
 
-/**
- * Created by WIN7 on 05/06/2017.
- */
 
+//public class CatalogoViewHolder extends RecyclerView.ViewHolder {
 public class CatalogoViewHolder extends RecyclerView.ViewHolder {
 
     public final TextView referencia;

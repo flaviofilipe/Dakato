@@ -63,6 +63,7 @@ public class VerCatalogoActivity extends AppCompatActivity {
         referencia.setText(item[1]);
         preco.setText(item[2]);
         Picasso.with(this).load(item[3]).fit().centerCrop().into(img);
+        tamanho.setText(item[4]);
     }
 
     @Override

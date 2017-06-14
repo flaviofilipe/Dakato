@@ -5,9 +5,9 @@
     <string name="hello_blank_fragment">Login</string>
     <string name="title_activity_principal">Pedidos</string>
     <string name="title_activity_pedidos">Lista de Pedidos</string>
-    <string name="title_activity_catalogo">Catalogo</string>
+    <string name="title_activity_catalogo">Catálogo</string>
     <string name="title_activity_enviar_pedido">Enviar Pedido</string>
-    <string name="title_activity_ver_catalogo">Ver Catalogo</string>
+    <string name="title_activity_ver_catalogo">Ver Catálogo</string>
     <string name="title_activity_ver_pedido">Ver Pedido</string>
     <string name="pedido">Lista de Pedidos</string>
     <string name="title_activity_cad_lista">Nova Lista</string>

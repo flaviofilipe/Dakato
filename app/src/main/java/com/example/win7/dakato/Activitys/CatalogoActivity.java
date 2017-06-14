@@ -137,39 +137,55 @@ public class CatalogoActivity extends AppCompatActivity {
                 Picasso.with(CatalogoActivity.this).load(model.getImg()).fit().centerCrop().into(imgCatalogo);
                 txtPpreco.setText(model.getPreco());
 
-                if (codigo == null) {
-                    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Intent i = new Intent(CatalogoActivity.this, VerCatalogoActivity.class);  //your class
 
-                            Bundle b = new Bundle();
-                            b.putStringArray("item", new String[]{nome, referencia, preco, img, tamanhos});
-                            i.putExtra("cpf", cpf);
-                            i.putExtras(b);
-
-                            startActivity(i);
-                        }
-                    });
-                } else {
-                    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Intent i = new Intent(CatalogoActivity.this, AddItemActivity.class);  //your class
-
-                            Bundle b = new Bundle();
-                            b.putStringArray("item", new String[]{nome, referencia, preco, img, tamanhos});
-                            i.putExtras(b);
-                            i.putExtra("codigo", codigo);
-                            i.putExtra("cpf", cpf);
-
-                            startActivity(i);
-                        }
-                    });
-                }
             }
         };
         mListView.setAdapter(mAdapter);
+        if (codigo == null) {
+            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Catalogo model = (Catalogo) parent.getItemAtPosition(position);
+
+                    final String nome = String.valueOf(model.getNome());
+                    final String referencia = String.valueOf(model.getReferencia());
+                    final String preco = String.valueOf(model.getPreco());
+                    final String img = model.getImg();
+                    final String tamanhos = model.getTamanhos();
+
+                    Intent i = new Intent(CatalogoActivity.this, VerCatalogoActivity.class);  //your class
+
+                    Bundle b = new Bundle();
+                    b.putStringArray("item", new String[]{nome, referencia, preco, img, tamanhos});
+                    i.putExtra("cpf", cpf);
+                    i.putExtras(b);
+
+                    startActivity(i);
+                }
+            });
+        } else {
+            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Catalogo model = (Catalogo) parent.getItemAtPosition(position);
+
+                    final String nome = String.valueOf(model.getNome());
+                    final String referencia = String.valueOf(model.getReferencia());
+                    final String preco = String.valueOf(model.getPreco());
+                    final String img = model.getImg();
+                    final String tamanhos = model.getTamanhos();
+                    Intent i = new Intent(CatalogoActivity.this, AddItemActivity.class);  //your class
+
+                    Bundle b = new Bundle();
+                    b.putStringArray("item", new String[]{nome, referencia, preco, img, tamanhos});
+                    i.putExtras(b);
+                    i.putExtra("codigo", codigo);
+                    i.putExtra("cpf", cpf);
+
+                    startActivity(i);
+                }
+            });
+        }
 
         /*
         //Lista os itens pela ordem nome
@@ -235,7 +251,7 @@ public class CatalogoActivity extends AppCompatActivity {
 
 
         final ListView mListView = (ListView) findViewById(R.id.lv_catalogo);
-        mAdapter = new FirebaseListAdapter<Catalogo>(this,Catalogo.class,R.layout.list_catalogo_layout,mRef.orderByChild("nome")){
+        mAdapter = new FirebaseListAdapter<Catalogo>(this,Catalogo.class,R.layout.list_catalogo_layout,mRef.orderByChild("referencia")){
 
             @Override
             protected void populateView(View v, Catalogo model, int position) {
@@ -245,53 +261,62 @@ public class CatalogoActivity extends AppCompatActivity {
                 final TextView txtNome = (TextView) v.findViewById(R.id.txt_catNome);
                 final TextView txtPpreco = (TextView) v.findViewById(R.id.txt_catPreco);
 
-                final String nome = model.getNome();
-                final String referencia = model.getReferencia();
-                final String preco = model.getPreco();
-                final String img = model.getImg();
-                final String tamanhos = model.getTamanhos();
 
                 txtReferencia.setText(model.getReferencia());
                 txtNome.setText(model.getNome());
-
                 Picasso.with(CatalogoActivity.this).load(model.getImg()).into(imgCatalogo);
                 txtPpreco.setText(model.getPreco());
 
-                if (codigo == null) {
-                    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Intent i = new Intent(CatalogoActivity.this, VerCatalogoActivity.class);  //your class
-
-                            Bundle b = new Bundle();
-                            b.putStringArray("item", new String[]{nome, referencia, preco, img, tamanhos});
-                            i.putExtra("cpf", cpf);
-                            i.putExtras(b);
-
-                            startActivity(i);
-                            finish();
-                        }
-                    });
-                } else {
-                    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Intent i = new Intent(CatalogoActivity.this, AddItemActivity.class);  //your class
-
-                            Bundle b = new Bundle();
-                            b.putStringArray("item", new String[]{nome, referencia, preco, img, tamanhos});
-                            i.putExtras(b);
-                            i.putExtra("codigo", codigo);
-                            i.putExtra("cpf", cpf);
-
-                            startActivity(i);
-                            finish();
-                        }
-                    });
-                }
             }
         };
         mListView.setAdapter(mAdapter);
+
+        if (codigo == null) {
+            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Catalogo model = (Catalogo) parent.getItemAtPosition(position);
+
+                    final String nome = String.valueOf(model.getNome());
+                    final String referencia = String.valueOf(model.getReferencia());
+                    final String preco = String.valueOf(model.getPreco());
+                    final String img = model.getImg();
+                    final String tamanhos = model.getTamanhos();
+                    Intent i = new Intent(CatalogoActivity.this, VerCatalogoActivity.class);  //your class
+
+                    Bundle b = new Bundle();
+                    b.putStringArray("item", new String[]{nome, referencia, preco, img, tamanhos});
+                    i.putExtra("cpf", cpf);
+                    i.putExtras(b);
+
+                    startActivity(i);
+                    //finish();
+                }
+            });
+        } else {
+            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Catalogo model = (Catalogo) parent.getItemAtPosition(position);
+
+                    final String nome = String.valueOf(model.getNome());
+                    final String referencia = String.valueOf(model.getReferencia());
+                    final String preco = String.valueOf(model.getPreco());
+                    final String img = model.getImg();
+                    final String tamanhos = model.getTamanhos();
+                    Intent i = new Intent(CatalogoActivity.this, AddItemActivity.class);  //your class
+
+                    Bundle b = new Bundle();
+                    b.putStringArray("item", new String[]{nome, referencia, preco, img, tamanhos});
+                    i.putExtras(b);
+                    i.putExtra("codigo", codigo);
+                    i.putExtra("cpf", cpf);
+
+                    startActivity(i);
+                    //finish();
+                }
+            });
+        }
 
         /*Lista os itens pela ordem nome
         mAdapter = new FirebaseRecyclerAdapter<Catalogo, CatalogoViewHolder>(Catalogo.class, R.layout.list_catalogo_layout, CatalogoViewHolder.class, mRef.orderByChild("nome")) {

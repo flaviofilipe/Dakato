@@ -37,9 +37,7 @@
             android:layout_weight="5"
             android:hint="Digite a referência"
             android:layout_gravity="bottom"
-            android:inputType="number"
-            android:focusable="true"
-            android:focusableInTouchMode="true" />
+            android:inputType="number"/>
 
         <ImageButton
             android:id="@+id/btnPesquisar"

@@ -19,7 +19,7 @@ public class VerPedidoController {
     }
 
 
-    public String inserePedido(String pedido_id, String itemcatalogo_id, String pp, String p, String m, String g, String gg, String obs){
+    public String inserePedido(String pedido_id, String itemcatalogo_id, String pp, String p, String m, String g, String gg, String obs, Double preco){
         ContentValues valores = new ContentValues();
         long resultado;
 
@@ -32,6 +32,7 @@ public class VerPedidoController {
         valores.put(VerPedidosContract.VerPedidosEntry.COLUMS_VP_G, g);
         valores.put(VerPedidosContract.VerPedidosEntry.COLUMS_VP_GG, gg);
         valores.put(VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS, obs);
+        valores.put(VerPedidosContract.VerPedidosEntry.COLUMS_VP_PRECO, preco);
 
         resultado = db.insert(VerPedidosContract.VerPedidosEntry.TABLE_NAME, null, valores);
         db.close();
@@ -54,7 +55,8 @@ public class VerPedidoController {
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_M,
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_G,
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_GG,
-                VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS
+                VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS,
+                VerPedidosContract.VerPedidosEntry.COLUMS_VP_PRECO
         };
         db = banco.getReadableDatabase();
         cursor = db.query(VerPedidosContract.VerPedidosEntry.TABLE_NAME, campos, null, null, null, null, null, null);
@@ -77,7 +79,8 @@ public class VerPedidoController {
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_M,
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_G,
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_GG,
-                VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS
+                VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS,
+                VerPedidosContract.VerPedidosEntry.COLUMS_VP_PRECO
         };
         String where = VerPedidosContract.VerPedidosEntry._ID + "=" + id;
         db = banco.getReadableDatabase();
@@ -100,7 +103,8 @@ public class VerPedidoController {
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_M,
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_G,
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_GG,
-                VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS
+                VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS,
+                VerPedidosContract.VerPedidosEntry.COLUMS_VP_PRECO
         };
 
         String where = VerPedidosContract.VerPedidosEntry.COLUMS_VP_PEDIDO_ID + "=" + id;
@@ -125,6 +129,33 @@ public class VerPedidoController {
         db = banco.getReadableDatabase();
         db.delete(VerPedidosContract.VerPedidosEntry.TABLE_NAME,where,null);
         db.close();
+    }
+
+
+    public Cursor carregaTotal(String id){
+        Cursor cursor = db.rawQuery("SELECT SUM("
+                + (VerPedidosContract.VerPedidosEntry.COLUMS_VP_PRECO)
+                + ") FROM " + (VerPedidosContract.VerPedidosEntry.TABLE_NAME), null);
+
+        if(cursor!=null){
+            cursor.moveToFirst();
+        }
+        db.close();
+        return cursor;
+    }
+
+    public String updateTotal(String id, Double total){
+        ContentValues valores = new ContentValues();
+        long resultado;
+
+        db = banco.getWritableDatabase();
+        valores.put(PedidoContract.PedidoEntry.COLUMS_TOTAL, total);
+        resultado = db.update(PedidoContract.PedidoEntry.TABLE_NAME,valores,PedidoContract.PedidoEntry._ID+" = "+id,null);
+        if (resultado ==-1)
+            return "Erro ao atualizar registro";
+        else
+            return "Registro atualizado com sucesso";
+
     }
 
 }

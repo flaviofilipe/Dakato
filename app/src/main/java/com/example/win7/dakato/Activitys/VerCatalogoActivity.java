@@ -34,14 +34,6 @@ public class VerCatalogoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Item Adiconado a lista", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -62,7 +54,7 @@ public class VerCatalogoActivity extends AppCompatActivity {
         titulo.setText(item[0]);
         referencia.setText(item[1]);
         preco.setText(item[2]);
-        Picasso.with(this).load(item[3]).fit().centerCrop().into(img);
+        Picasso.with(this).load(item[3]).into(img);
         tamanho.setText(item[4]);
     }
 

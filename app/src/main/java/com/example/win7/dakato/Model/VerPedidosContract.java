@@ -18,6 +18,7 @@ public class VerPedidosContract {
         public static final String COLUMS_VP_M = "m";
         public static final String COLUMS_VP_GG = "gg";
         public static final String COLUMS_VP_OBS = "obs";
+        public static final String COLUMS_VP_PRECO = "preco";
 
         public static final String SCRIPT_DEL_TABELA =  "DROP TABLE IF EXISTS " + TABLE_NAME;
 

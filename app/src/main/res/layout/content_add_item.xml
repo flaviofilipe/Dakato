@@ -15,10 +15,10 @@ tools:showIn="@layout/activity_add_item">
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -26,8 +26,21 @@ tools:showIn="@layout/activity_add_item">
             android:id="@+id/img_addCatalogo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/ic_logo_dakatto" />
-    </LinearLayout>
+            app:srcCompat="@drawable/ic_logo_dakatto"
+            android:scaleType="center"/>
+        <TextView
+            android:id="@+id/txt_titulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nome"
+            android:layout_alignParentBottom="true"
+            android:background="#9c000000"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"/>
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -39,14 +52,7 @@ tools:showIn="@layout/activity_add_item">
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txt_titulo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Nome"
-                android:textAppearance="?android:textAppearanceLarge"
-                android:textColor="@android:color/background_dark" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -58,7 +64,7 @@ tools:showIn="@layout/activity_add_item">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background="@android:color/background_dark">
+                    android:background="@color/colorPrimary">
 
                     <TextView
                         android:id="@+id/textView"
@@ -283,12 +289,19 @@ tools:showIn="@layout/activity_add_item">
 
                 </LinearLayout>
             </LinearLayout>
-            <EditText
-                android:id="@+id/edt_Obs"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2"
-                android:hint="Obs"/>
+                android:layout_weight="1.5"
+                android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_Obs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="OBS"/>
+            </LinearLayout>
+
             <Button
                 android:id="@+id/btnEnviarPedido"
                 android:layout_width="match_parent"

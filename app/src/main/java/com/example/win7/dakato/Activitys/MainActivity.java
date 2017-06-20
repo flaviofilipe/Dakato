@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //implementaFB();
 
         btnAcessar =(Button) findViewById(R.id.btnAcessar);
 
@@ -29,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
 
         super.onStart();
-
 
         btnAcessar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +52,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void implementaFB() {
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-    }
 }

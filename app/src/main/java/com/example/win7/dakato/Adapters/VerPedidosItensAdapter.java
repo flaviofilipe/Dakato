@@ -1,66 +1,102 @@
 package com.example.win7.dakato.Adapters;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.win7.dakato.Funcoes;
+import com.example.win7.dakato.Model.VerPedidosContract;
 import com.example.win7.dakato.R;
 import com.example.win7.dakato.VerPedidoItens;
 
 import java.util.ArrayList;
 
-/**
- * Created by WIN7 on 29/05/2017.
- */
+public class VerPedidosItensAdapter extends CursorAdapter {
 
-public class VerPedidosItensAdapter extends ArrayAdapter<VerPedidoItens> {
-    private Context context;
-    private ArrayList<VerPedidoItens> verPedido;
-
-
-    public VerPedidosItensAdapter(Context context, ArrayList<VerPedidoItens> verPedido) {
-        super(context, 0, verPedido);
-        this.context = context;
-        this.verPedido = verPedido;
+    public VerPedidosItensAdapter(Context context, Cursor c) {
+        super(context, c, 0);
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
-        //Pega a posicao do bjt q ta buscando
-        VerPedidoItens verPedidoPosicao = this.verPedido.get(position);
+    @Override
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        return LayoutInflater.from(context).inflate(R.layout.list_ver_pedido_layout, parent, false);
+    }
 
-        //Informa o layout
-        convertView = LayoutInflater.from(this.context).inflate(R.layout.list_ver_pedido_layout,null);
+    public void bindView(View view, Context context, Cursor cursor) {
 
-        TextView txtId = (TextView) convertView.findViewById(R.id.txt_vp_id);
-        txtId.setText(String.valueOf(verPedidoPosicao.getId()));
+        TextView txtId = (TextView) view.findViewById(R.id.txt_vp_id);
+        TextView txtRef = (TextView) view.findViewById(R.id.txt_vp_itemCatalogo);
 
-        TextView txtPedido_id = (TextView) convertView.findViewById(R.id.txt_pedidoId);
-        txtPedido_id.setText(String.valueOf(verPedidoPosicao.getPedido_id()));
+        TextView txtP = (TextView) view.findViewById(R.id.txt_vp_p);
+        TextView txtPP = (TextView) view.findViewById(R.id.txt_vp_pp);
+        TextView txtM = (TextView) view.findViewById(R.id.txt_vp_m);
+        TextView txtG = (TextView) view.findViewById(R.id.txt_vp_g);
+        TextView txtGG = (TextView) view.findViewById(R.id.txt_vp_gg);
 
-
-        TextView txtP = (TextView) convertView.findViewById(R.id.txt_vp_p);
-        txtP.setText(String.valueOf(verPedidoPosicao.getP()));
-
-        TextView txtPP = (TextView) convertView.findViewById(R.id.txt_vp_pp);
-        txtPP.setText(String.valueOf(verPedidoPosicao.getPp()));
-
-        TextView txtM = (TextView) convertView.findViewById(R.id.txt_vp_m);
-        txtM.setText(String.valueOf(verPedidoPosicao.getM()));
-
-        TextView txtG = (TextView) convertView.findViewById(R.id.txt_vp_g);
-        txtG.setText(String.valueOf(verPedidoPosicao.getG()));
-
-        TextView txtGG = (TextView) convertView.findViewById(R.id.txt_vp_gg);
-        txtGG.setText(String.valueOf(verPedidoPosicao.getGg()));
-
-        TextView txtObs = (TextView) convertView.findViewById(R.id.txt_vp_obs);
-        txtObs.setText(verPedidoPosicao.getObs());
+        TextView txtObs = (TextView) view.findViewById(R.id.txt_vp_obs);
+        TextView txtPreco = (TextView) view.findViewById(R.id.txt_vp_preco);
 
 
-        return convertView;
+        String id = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry._ID));
+        String ref = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_ITEMCATALOGO_ID));
+        String p = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_P));
+        String pp = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_PP));
+        String m = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_M));
+        String g = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_G));
+        String gg = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_GG));
+        String obs = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS));
+        Double preco = cursor.getDouble(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_PRECO));
+
+
+        txtId.setText(String.valueOf(id));
+        /*
+        final TextView txtPP = new TextView(context);
+        final TextView txtP = new TextView(context);
+        final TextView txtM = new TextView(context);
+        final TextView txtG = new TextView(context);
+        final TextView txtGG = new TextView(context);
+        LinearLayout llayout = (LinearLayout) view.findViewById(R.id.ll_tamanhos);
+        */
+
+
+        if (!p.equals("")) {
+            txtP.setText("P: "+String.valueOf(p));
+        }else {
+            txtP.setVisibility(View.GONE);
+        }
+        if (!pp.equals("")) {
+            txtPP.setText("PP: "+String.valueOf(pp));
+        }else {
+            txtPP.setVisibility(View.GONE);
+        }
+        if (!m.equals("")) {
+            txtM.setText("M: "+String.valueOf(m));
+        }else {
+            txtM.setVisibility(View.GONE);
+        }
+        if (!g.equals("")) {
+            txtG.setText("G: "+String.valueOf(g));
+        }else {
+            txtG.setVisibility(View.GONE);
+        }
+        if (!gg.equals("")) {
+            txtGG.setText("GG: "+String.valueOf(gg));
+
+        }else {
+            txtGG.setVisibility(View.GONE);
+        }
+
+        txtObs.setText(obs);
+        txtPreco.setText("R$"+ Funcoes.precoSaida(preco));
+        txtRef.setText("Ref "+ ref);
+
     }
 
 }

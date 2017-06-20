@@ -1,12 +1,16 @@
 package com.example.win7.dakato.Adapters;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+import com.example.win7.dakato.Funcoes;
+import com.example.win7.dakato.Model.PedidoContract;
 import com.example.win7.dakato.Pedido;
 import com.example.win7.dakato.R;
 
@@ -16,29 +20,34 @@ import java.util.ArrayList;
  * Created by WIN7 on 27/05/2017.
  */
 
-public class PedidosAdapter extends ArrayAdapter<Pedido> {
+public class PedidosAdapter extends CursorAdapter {
 
-    private Context context;
-    private ArrayList<Pedido> pedido;
 
-    public PedidosAdapter(Context context, ArrayList<Pedido> pedido) {
-        super(context, 0, pedido);
-        this.context = context;
-        this.pedido = pedido;
+    public PedidosAdapter(Context context, Cursor cursor) {
+        super(context, cursor, 0);
     }
 
-    //Devolve view personalizada
 
-    public View getView(int position, View convertView, ViewGroup parent) {
-        //Pega a posicao do bjt q ta buscando
-        Pedido pedidoPosicao = this.pedido.get(position);
+    @Override
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        return LayoutInflater.from(context).inflate(R.layout.list_pedido_layout, parent, false);
+    }
 
-        //Informa o layout
-        convertView = LayoutInflater.from(this.context).inflate(R.layout.list_pedido_layout,null);
+    @Override
+    public void bindView(View view, Context context, Cursor cursor) {
+        TextView txtEmissao = (TextView) view.findViewById(R.id.txt_emissao);
+        TextView txtId = (TextView) view.findViewById(R.id.txt_id);
+        TextView txtTotal = (TextView) view.findViewById(R.id.txt_total);
 
-        TextView txtEmissao = (TextView) convertView.findViewById(R.id.txt_emissao);
-        txtEmissao.setText(pedidoPosicao.getEmissao());
+        String id = cursor.getString(cursor.getColumnIndexOrThrow(PedidoContract.PedidoEntry._ID));
+        String emissao = cursor.getString(cursor.getColumnIndexOrThrow(PedidoContract.PedidoEntry.COLUMS_EMISSAO));
+        Double total = cursor.getDouble(cursor.getColumnIndexOrThrow(PedidoContract.PedidoEntry.COLUMS_TOTAL));
 
-        return convertView;
+        txtEmissao.setText(emissao);
+        txtId.setText(id);
+
+        txtTotal.setText("R$"+ Funcoes.precoSaida(total));
+
+
     }
 }

@@ -14,8 +14,8 @@ public class PedidoContract {
 
         public static final String _ID = "_id";
         public static final String COLUMS_EMISSAO = "emissao";
-        //public static final String COLUMS_STATUS = "status";
         public static final String COLUMS_CPF = "cpf";
+        public static final String COLUMS_TOTAL = "total";
 
 
         public static final String SCRIPT_DEL_TABELA =  "DROP TABLE IF EXISTS " + TABLE_NAME;

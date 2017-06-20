@@ -49,8 +49,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Para mais informações entre em contato \nNúmero: (xx)xxxxx-xxxx
-Email: xxxxx@xxxxx.com"
+            android:text="Para mais informações entre em contato
+            \nRepresentante: (77)99997-3760
+            \nFábrica: (77)99934-7373
+            \nFixo: (77)3441-0886
+Email: contato@dkatto.com.br"
             android:gravity="center"
             android:layout_marginTop="20dp"/>
 

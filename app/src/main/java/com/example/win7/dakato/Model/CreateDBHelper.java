@@ -10,8 +10,8 @@ import android.util.Log;
  */
 
 public class CreateDBHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 3;
-    private static final String DATABASE_NAME = "dakato.db";
+    private static final int DATABASE_VERSION = 6;
+    private static final String DATABASE_NAME = "dkato.db";
 
     public CreateDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -23,24 +23,9 @@ public class CreateDBHelper extends SQLiteOpenHelper {
                 "(" +
                 PedidoContract.PedidoEntry._ID              + " INTEGER PRIMARY KEY,"   +
                 PedidoContract.PedidoEntry.COLUMS_CPF       + " TEXT NOT NULL, "        +
-                PedidoContract.PedidoEntry.COLUMS_EMISSAO   + " TEXT NOT NULL "        +
+                PedidoContract.PedidoEntry.COLUMS_EMISSAO   + " TEXT NOT NULL, "        +
+                PedidoContract.PedidoEntry.COLUMS_TOTAL   + " REAL "        +
                 "); ";
-
-                /*
-                +"CREATE TABLE " +
-                CatalogoContract.CatalogoEntry.TABLE_NAME +
-                "(" +
-                CatalogoContract.CatalogoEntry._ID                  + " INTEGER PRIMARY KEY," +
-                CatalogoContract.CatalogoEntry.COLUMS_REFERENCIA    + " TEXT NOT NULL, "    +
-                CatalogoContract.CatalogoEntry.COLUMS_NOME          + " TEXT NOT NULL, "    +
-                CatalogoContract.CatalogoEntry.COLUMS_PRECO         + " REAL NOT NULL, "    +
-                CatalogoContract.CatalogoEntry.COLUMS_IMG           + " TEXT , "            +
-                CatalogoContract.CatalogoEntry.COLUMS_PP            + " TEXT , "            +
-                CatalogoContract.CatalogoEntry.COLUMS_P             + " TEXT , "            +
-                CatalogoContract.CatalogoEntry.COLUMS_G             + " TEXT , "            +
-                CatalogoContract.CatalogoEntry.COLUMS_M             + " TEXT, "             +
-                CatalogoContract.CatalogoEntry.COLUMS_GG            + " TEXT"               + "); "
-                */
 
                 String createSqlVerPedidos = " CREATE TABLE " + VerPedidosContract.VerPedidosEntry.TABLE_NAME +
                 "(" +
@@ -52,7 +37,8 @@ public class CreateDBHelper extends SQLiteOpenHelper {
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_M          + " TEXT, " +
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_G          + " TEXT, " +
                 VerPedidosContract.VerPedidosEntry.COLUMS_VP_GG         + " TEXT, " +
-                VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS        + " TEXT" + "); "
+                VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS        + " TEXT, " +
+                VerPedidosContract.VerPedidosEntry.COLUMS_VP_PRECO        + " REAL" + "); "
                 ;
         Log.i("sql",createSqlVerPedidos);
 
@@ -66,7 +52,6 @@ public class CreateDBHelper extends SQLiteOpenHelper {
 
         db.execSQL(PedidoContract.PedidoEntry.SCRIPT_DEL_TABELA);
         db.execSQL(VerPedidosContract.VerPedidosEntry.SCRIPT_DEL_TABELA);
-        db.execSQL(CatalogoContract.CatalogoEntry.SCRIPT_DEL_TABELA);
         onCreate(db);
     }
 }

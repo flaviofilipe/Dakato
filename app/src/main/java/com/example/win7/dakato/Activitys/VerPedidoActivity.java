@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import com.example.win7.dakato.Adapters.VerPedidosItensAdapter;
@@ -22,12 +20,6 @@ import com.example.win7.dakato.Model.PedidoController;
 import com.example.win7.dakato.Model.VerPedidoController;
 import com.example.win7.dakato.Model.VerPedidosContract;
 import com.example.win7.dakato.R;
-import com.example.win7.dakato.VerPedidoItens;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class VerPedidoActivity extends AppCompatActivity {
 
@@ -71,34 +63,11 @@ public class VerPedidoActivity extends AppCompatActivity {
     private void listarVerPedidos() {
         VerPedidoController crud = new VerPedidoController(getBaseContext());
         final Cursor cursor = crud.carregaDadoByPedidos(codigo);
-
-        String[] nomeCampos = new String[]{
-                VerPedidosContract.VerPedidosEntry._VP_ID,
-                VerPedidosContract.VerPedidosEntry.COLUMS_VP_PEDIDO_ID,
-                VerPedidosContract.VerPedidosEntry.COLUMS_VP_ITEMCATALOGO_ID,
-                VerPedidosContract.VerPedidosEntry.COLUMS_VP_P,
-                VerPedidosContract.VerPedidosEntry.COLUMS_VP_PP,
-                VerPedidosContract.VerPedidosEntry.COLUMS_VP_M,
-                VerPedidosContract.VerPedidosEntry.COLUMS_VP_G,
-                VerPedidosContract.VerPedidosEntry.COLUMS_VP_GG,
-                VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS
-        };
-        int[] idViews = new int[]{
-                R.id.txt_vp_id,
-                R.id.txt_pedidoId,
-                R.id.txt_vp_itemCatalogo,
-                R.id.txt_vp_pp,
-                R.id.txt_vp_p,
-                R.id.txt_vp_m,
-                R.id.txt_vp_g,
-                R.id.txt_vp_gg,
-                R.id.txt_vp_obs
-        };
-
-        SimpleCursorAdapter adaptador = new SimpleCursorAdapter(getBaseContext(),
-                R.layout.list_ver_pedido_layout, cursor, nomeCampos, idViews, 0);
         lv_verPedidos = (ListView) findViewById(R.id.lv_verpedidos);
-        lv_verPedidos.setAdapter(adaptador);
+        VerPedidosItensAdapter adapter = new VerPedidosItensAdapter(this, cursor);
+
+
+        lv_verPedidos.setAdapter(adapter);
 
         lv_verPedidos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -137,9 +106,7 @@ public class VerPedidoActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 cursor.moveToPosition(position);
-                String id_item = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry._ID));
-                final String pedido_id = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_PEDIDO_ID));
-                final String catalogo_id = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_ITEMCATALOGO_ID));
+               final String catalogo_id = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_ITEMCATALOGO_ID));
                 final String obs = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS));
                 final String p = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_P));
                 final String pp = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_PP));
@@ -150,7 +117,7 @@ public class VerPedidoActivity extends AppCompatActivity {
 
                 new AlertDialog.Builder(VerPedidoActivity.this)
                         .setTitle("Compartilhar")
-                        .setMessage("Deseja compartinhar este item? " + cursor.getCount())
+                        .setMessage("Compartilhe no whatsapp (77)99997-3760. \nDeseja compartinhar este item? " + cursor.getCount())
                         .setPositiveButton("Compartilhar",
                                 new DialogInterface.OnClickListener() {
                                     @Override
@@ -161,14 +128,27 @@ public class VerPedidoActivity extends AppCompatActivity {
                                         // tipo de conteúdo da intent
                                         intent.setType("text/plain");
                                         // string a ser enviada para outra intent
+                                        String dados = "Catalogo id: " + catalogo_id;
+                                        if (!p.equals("")) {
+                                            dados += "\nP: " + p;
+                                        }
+                                        if (!pp.equals("")) {
+                                            dados += "\nPP: " + pp;
+                                        }
+                                        if (!m.equals("")) {
+                                            dados += "\nM: " + m;
+                                        }
+                                        if (!g.equals("")) {
+                                            dados += "\nG: " + g;
+                                        }
+                                        if (!gg.equals("")) {
+                                            dados += "\nGG: " + gg;
+                                        }
+                                        if (!obs.equals("")) {
+                                            dados += "\nObs: " + obs + "\n------------\n";
+                                        }
                                         intent.putExtra(Intent.EXTRA_TEXT, "Nova solicitação \nCPF: " + cpf
-                                                + " \nCatalogo id: " + catalogo_id
-                                                + " \nPP: " + pp
-                                                + " \nP: " + p
-                                                + " \nM: " + m
-                                                + " \nG: " + g
-                                                + " \nGG: " + gg
-                                                + " \nObs: " + obs
+                                                + "\n" + dados
                                         );
                                         // inicia a intent
                                         startActivity(intent);
@@ -241,7 +221,7 @@ public class VerPedidoActivity extends AppCompatActivity {
         String dados = "";
 
 
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
                 itemcatalogo_id = cursor.getString(cursor.getColumnIndex(VerPedidosContract.VerPedidosEntry.COLUMS_VP_ITEMCATALOGO_ID));
                 p = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_P));
@@ -251,16 +231,28 @@ public class VerPedidoActivity extends AppCompatActivity {
                 gg = cursor.getString(cursor.getColumnIndexOrThrow(VerPedidosContract.VerPedidosEntry.COLUMS_VP_GG));
                 obs = cursor.getString(cursor.getColumnIndex(VerPedidosContract.VerPedidosEntry.COLUMS_VP_OBS));
 
-                dados += "Item: " + itemcatalogo_id
-                        + "\nP: " + p
-                        + "\nPP: " + pp
-                        + "\nM: " + m
-                        + "\nG: " + g
-                        + "\nGG: " + gg
-                        + "\nObs: " + obs + "\n------------\n";
+                dados += "Item: " + itemcatalogo_id;
+                if (!p.equals("")) {
+                    dados += "\nP: " + p;
+                }
+                if (!pp.equals("")) {
+                    dados += "\nPP: " + pp;
+                }
+                if (!m.equals("")) {
+                    dados += "\nM: " + m;
+                }
+                if (!g.equals("")) {
+                    dados += "\nG: " + g;
+                }
+                if (!gg.equals("")) {
+                    dados += "\nGG: " + gg;
+                }
+                if (!obs.equals("")) {
+                    dados += "\nObs: " + obs + "\n------------\n";
+                }
             }
             while (cursor.moveToNext());
-        }else{
+        } else {
             dados = "Lista vazia.";
         }
 
@@ -268,9 +260,9 @@ public class VerPedidoActivity extends AppCompatActivity {
         final String finalDados = dados;
         new AlertDialog.Builder(VerPedidoActivity.this)
                 .setTitle("Compartilhar Lista")
-                .setMessage("Lista de produtos\n"
-                        + "Cpf:" +cpf+"\n"
-                        +dados).setPositiveButton("Compartilhar",
+                .setMessage("Compartilhe no whatsapp (77)99997-3760. \nLista de produtos\n"
+                        + "Cpf:" + cpf + "\n"
+                        + dados).setPositiveButton("Compartilhar",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -281,8 +273,8 @@ public class VerPedidoActivity extends AppCompatActivity {
                         intent.setType("text/plain");
                         // string a ser enviada para outra intent
                         intent.putExtra(Intent.EXTRA_TEXT, "Lista de produtos\n"
-                                + "Cpf:" +cpf+"\n"
-                                +finalDados
+                                + "Cpf:" + cpf + "\n"
+                                + finalDados
                         );
                         // inicia a intent
                         startActivity(intent);

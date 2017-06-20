@@ -1,55 +1,26 @@
 package com.example.win7.dakato.Activitys;
 
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.win7.dakato.Adapters.PedidosAdapter;
-import com.example.win7.dakato.Model.CreateDBHelper;
 import com.example.win7.dakato.Model.PedidoContract;
 import com.example.win7.dakato.Model.PedidoController;
-import com.example.win7.dakato.Pedido;
 import com.example.win7.dakato.R;
-import com.firebase.client.ChildEventListener;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-
-import static java.security.AccessController.getContext;
 
 public class PedidosActivity extends AppCompatActivity {
 
@@ -100,7 +71,6 @@ public class PedidosActivity extends AppCompatActivity {
 
     }
 
-
     private String pegaData() {
         long date = System.currentTimeMillis();
         SimpleDateFormat sdf = new SimpleDateFormat("d/M/yyyy");
@@ -145,15 +115,10 @@ public class PedidosActivity extends AppCompatActivity {
     public void listarPedidos() {
         final PedidoController crud = new PedidoController(getBaseContext());
         final Cursor cursor = crud.carregaDados();
-
-        String[] nomeCampos = new String[]{PedidoContract.PedidoEntry.COLUMS_EMISSAO,
-                PedidoContract.PedidoEntry._ID};
-        int[] idViews = new int[]{R.id.txt_emissao, R.id.txt_id};
-
-        SimpleCursorAdapter adaptador = new SimpleCursorAdapter(getBaseContext(),
-                R.layout.list_pedido_layout, cursor, nomeCampos, idViews, 0);
         lv_pedidos = (ListView) findViewById(R.id.lv_pedidos);
-        lv_pedidos.setAdapter(adaptador);
+        PedidosAdapter adapter = new PedidosAdapter(this, cursor);
+
+        lv_pedidos.setAdapter(adapter);
 
         lv_pedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -34,7 +34,6 @@ public class CatalogoAdapter extends RecyclerView.Adapter {
     }
 
 
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)

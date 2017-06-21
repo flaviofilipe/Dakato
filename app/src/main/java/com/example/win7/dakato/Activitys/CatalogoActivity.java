@@ -3,7 +3,6 @@ package com.example.win7.dakato.Activitys;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -158,7 +157,7 @@ public class CatalogoActivity extends AppCompatActivity {
 
                 txtReferencia.setText(model.getReferencia());
                 txtNome.setText(model.getNome());
-                Picasso.with(CatalogoActivity.this).load(model.getImg()).into(imgCatalogo);
+                Picasso.with(CatalogoActivity.this).load(model.getImg()).placeholder(R.drawable.semimagem).into(imgCatalogo);
                 txtPpreco.setText(model.getPreco());
 
             }

@@ -86,7 +86,8 @@ public class AddItemActivity extends AppCompatActivity {
         referencia.setText(item[1]);
         preco.setText(item[2]);
         tamanho.setText(tamanhos);
-        Picasso.with(this).load(item[3]).into(img);
+        Picasso.with(this).load(item[3]).placeholder(R.drawable.semimagem).into(img);
+
 
 
         if (tamanhos == null) {

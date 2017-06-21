@@ -54,8 +54,18 @@ public class VerCatalogoActivity extends AppCompatActivity {
         titulo.setText(item[0]);
         referencia.setText(item[1]);
         preco.setText(item[2]);
-        Picasso.with(this).load(item[3]).into(img);
+        Picasso.with(this).load(item[3]).placeholder(R.drawable.semimagem).into(img);
         tamanho.setText(item[4]);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Picasso.with(VerCatalogoActivity.this)
+                        .load(item[3])
+                        .resize(50, 50)
+                        .centerCrop()
+                        .into(img);
+            }
+        });
     }
 
     @Override

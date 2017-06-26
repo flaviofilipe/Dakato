@@ -196,10 +196,13 @@ public class VerPedidoActivity extends AppCompatActivity {
                 shareText();
                 return true;
             case android.R.id.home:
+                /*
                 Intent intent = new Intent(VerPedidoActivity.this, PedidosActivity.class);
                 intent.putExtra("cpf", cpf);
                 startActivity(intent);
                 finish();
+                */
+                onBackPressed();
                 return true;
 
             default:

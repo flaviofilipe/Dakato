@@ -27,9 +27,12 @@ public class CatalogoActivity extends AppCompatActivity {
     ImageButton btnPesquisar;
     String codigo;
     String cpf;
+    int posicaoLV;
+    int index;
     EditText edtPesquisar;
     FirebaseListAdapter mAdapter;
     DatabaseReference mRef;
+    ListView mListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,18 +47,17 @@ public class CatalogoActivity extends AppCompatActivity {
         //Recebe ID
         codigo = this.getIntent().getStringExtra("codigo");
         cpf = this.getIntent().getStringExtra("cpf");
+        posicaoLV = this.getIntent().getIntExtra("posicao",0);
 
         btnPesquisar = (ImageButton) findViewById(R.id.btnPesquisar);
         edtPesquisar = (EditText) findViewById(R.id.edt_pesquisar);
 
+        mListView = (ListView) findViewById(R.id.lv_catalogo);
+        //mListView.smoothScrollToPosition(20);
         mRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://dkato-790c9.firebaseio.com/ITENS");
 
-    }
+       index = mListView.getFirstVisiblePosition();
 
-    @Override
-    protected void onStart() {
-
-        super.onStart();
         listaItensFirebase();
 
 
@@ -72,9 +74,7 @@ public class CatalogoActivity extends AppCompatActivity {
             }
         });
 
-
     }
-
     private void procurarItensFirebase(String pesquisa) {
 
         final ListView mListView = (ListView) findViewById(R.id.lv_catalogo);
@@ -143,8 +143,8 @@ public class CatalogoActivity extends AppCompatActivity {
     }
 
     private void listaItensFirebase() {
+        mListView.setSelectionFromTop(index, 0);
 
-        final ListView mListView = (ListView) findViewById(R.id.lv_catalogo);
         mAdapter = new FirebaseListAdapter<Catalogo>(this,Catalogo.class,R.layout.list_catalogo_layout,mRef.orderByChild("referencia")){
 
             @Override
@@ -159,7 +159,6 @@ public class CatalogoActivity extends AppCompatActivity {
                 txtNome.setText(model.getNome());
                 Picasso.with(CatalogoActivity.this).load(model.getImg()).placeholder(R.drawable.semimagem).into(imgCatalogo);
                 txtPpreco.setText(model.getPreco());
-
             }
         };
         mListView.setAdapter(mAdapter);
@@ -180,10 +179,10 @@ public class CatalogoActivity extends AppCompatActivity {
                     Bundle b = new Bundle();
                     b.putStringArray("item", new String[]{nome, referencia, preco, img, tamanhos});
                     i.putExtra("cpf", cpf);
+                    i.putExtra("posicao", position);
                     i.putExtras(b);
 
                     startActivity(i);
-                    //finish();
                 }
             });
         } else {
@@ -204,6 +203,7 @@ public class CatalogoActivity extends AppCompatActivity {
                     i.putExtras(b);
                     i.putExtra("codigo", codigo);
                     i.putExtra("cpf", cpf);
+                    i.putExtra("posicao", position);
 
                     startActivity(i);
                     //finish();
@@ -212,7 +212,6 @@ public class CatalogoActivity extends AppCompatActivity {
         }
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -232,10 +231,13 @@ public class CatalogoActivity extends AppCompatActivity {
                 finish();
                 return true;
             case android.R.id.home:
+                /*
                 Intent intent = new Intent(CatalogoActivity.this, MenuInicialActivity.class);
                 intent.putExtra("cpf", cpf);
                 startActivity(intent);
                 finish();
+                */
+                onBackPressed();
                 return true;
 
             default:

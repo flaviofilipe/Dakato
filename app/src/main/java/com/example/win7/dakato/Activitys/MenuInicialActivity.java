@@ -17,7 +17,6 @@ public class MenuInicialActivity extends AppCompatActivity {
 
         Button btnPedido = (Button) findViewById(R.id.btnPedido);
         Button btnCatalogo = (Button) findViewById(R.id.btnCatalogo);
-        Button btnEnviarPedido = (Button) findViewById(R.id.btnEnviarPedido);
         final String cpf = this.getIntent().getStringExtra("cpf");
 
         //Pedido
@@ -27,6 +26,7 @@ public class MenuInicialActivity extends AppCompatActivity {
                 Intent intent = new Intent(MenuInicialActivity.this,PedidosActivity.class);
                 intent.putExtra("cpf", cpf);
                 startActivity(intent);
+                onPause();
             }
         });
 
@@ -37,6 +37,7 @@ public class MenuInicialActivity extends AppCompatActivity {
                 Intent intent = new Intent(MenuInicialActivity.this,CatalogoActivity.class);
                 intent.putExtra("cpf", cpf);
                 startActivity(intent);
+                onPause();
             }
         });
 

@@ -98,11 +98,15 @@ public class PedidosActivity extends AppCompatActivity {
                 Toast.makeText(PedidosActivity.this, "Atualizando", Toast.LENGTH_SHORT).show();
                 finish();
                 return true;
+
             case android.R.id.home:
+                /*
                 Intent intent = new Intent(PedidosActivity.this, MenuInicialActivity.class);
                 intent.putExtra("cpf", cpf);
                 startActivity(intent);
                 finish();
+                */
+                onBackPressed();
                 return true;
 
             default:

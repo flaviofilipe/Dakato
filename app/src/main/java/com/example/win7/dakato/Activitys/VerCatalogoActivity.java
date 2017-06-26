@@ -24,6 +24,7 @@ public class VerCatalogoActivity extends AppCompatActivity {
     private TextView preco;
     private TextView tamanho;
     private ImageView img;
+    private int posicaoLV;
 
     String cpf;
 
@@ -44,6 +45,7 @@ public class VerCatalogoActivity extends AppCompatActivity {
         tamanho = (TextView) findViewById(R.id.txt_tamanho);
         img = (ImageView) findViewById(R.id.img_verCatalogo);
         cpf = this.getIntent().getStringExtra("cpf");
+        posicaoLV = this.getIntent().getIntExtra("posicao",0);
         //Fim declaracoes
 
         //Recebe ID
@@ -61,7 +63,6 @@ public class VerCatalogoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Picasso.with(VerCatalogoActivity.this)
                         .load(item[3])
-                        .resize(50, 50)
                         .centerCrop()
                         .into(img);
             }
@@ -73,10 +74,15 @@ public class VerCatalogoActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case android.R.id.home:
+                /*
                 Intent intent = new Intent(VerCatalogoActivity.this, CatalogoActivity.class);
                 intent.putExtra("cpf", cpf);
+                intent.putExtra("posicao", posicaoLV);
                 startActivity(intent);
+
                 finish();
+                */
+                onBackPressed();
                 return true;
 
             default:

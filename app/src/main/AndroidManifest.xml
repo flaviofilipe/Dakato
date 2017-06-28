@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.win7.dakato">
+    package="br.com.redewsouza.win7.dkatto">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -28,7 +28,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.win7.dakato.Activitys.MenuInicialActivity" />
+                android:value="br.com.redewsouza.win7.dkatto.Activitys.MenuInicialActivity" />
         </activity>
         <activity android:name=".Activitys.MenuInicialActivity" />
         <activity
@@ -39,7 +39,7 @@
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.win7.dakato.Activitys.MenuInicialActivity" />
+                android:value="br.com.redewsouza.win7.dkatto.Activitys.MenuInicialActivity" />
         </activity>
         <activity
             android:name=".Activitys.VerCatalogoActivity"
@@ -48,7 +48,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.win7.dakato.Activitys.CatalogoActivity" />
+                android:value="br.com.redewsouza.win7.dkatto.Activitys.CatalogoActivity" />
         </activity>
         <activity
             android:name=".Activitys.VerPedidoActivity"
@@ -57,7 +57,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.win7.dakato.Activitys.PedidosActivity" />
+                android:value="br.com.redewsouza.win7.dkatto.Activitys.PedidosActivity" />
         </activity>
         <activity
             android:name=".Activitys.AddItemActivity"
@@ -67,7 +67,7 @@
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.win7.dakato.Activitys.VerPedidoActivity" />
+                android:value="br.com.redewsouza.win7.dkatto.Activitys.VerPedidoActivity" />
         </activity>
     </application>
 

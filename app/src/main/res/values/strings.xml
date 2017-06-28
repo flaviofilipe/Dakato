@@ -8,11 +8,12 @@
     <string name="title_activity_catalogo">Catálogo</string>
     <string name="title_activity_enviar_pedido">Enviar Pedido</string>
     <string name="title_activity_ver_catalogo">Ver Catálogo</string>
-    <string name="title_activity_ver_pedido">Ver Pedido</string>
+    <string name="title_activity_ver_pedido">Itens da Lista</string>
     <string name="pedido">Lista de Pedidos</string>
     <string name="title_activity_cad_lista">Nova Lista</string>
     <string name="title_activity_add_item">Novo Item</string>
     <string name="alerta_catalogo">Caso as imagens não apareça selecione o botão atualizar e verifique sua conexão.</string>
     <string name="alerta_pedidos">Para adicionar uma nova lista selecione o botão \'+\' no canto inferior direito</string>
+    <string name="alerta_ver_pedido">Para adicionar um novo item selecione o botão \'+\' no canto inferior direito</string>
 
 </resources>

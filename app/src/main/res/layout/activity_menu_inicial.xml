@@ -19,7 +19,8 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/ic_logo_dakatto" />
+        app:srcCompat="@drawable/ic_logo_dakatto"
+        android:contentDescription="Logo Dkatto" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,15 +46,19 @@
             android:background="@color/colorPrimary"
             android:text="@string/title_activity_catalogo"
             android:textColor="@android:color/white" />
+        <Button
+            android:id="@+id/btnAjuda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/colorPrimary"
+            android:text="Ajuda"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Para mais informações entre em contato
-            \nRepresentante: (77)99997-3760
-            \nFábrica: (77)99934-7373
-            \nFixo: (77)3441-0886
-Email: contato@dkatto.com.br"
+            android:text="@string/contato"
             android:gravity="center"
             android:layout_marginTop="20dp"/>
 

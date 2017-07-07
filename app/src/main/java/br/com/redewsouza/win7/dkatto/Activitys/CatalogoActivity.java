@@ -54,7 +54,7 @@ public class CatalogoActivity extends AppCompatActivity {
 
         mListView = (ListView) findViewById(R.id.lv_catalogo);
         //mListView.smoothScrollToPosition(20);
-        mRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://crtlp-d10e6.firebaseio.com/ITENS");
+        mRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://dkato-790c9.firebaseio.com/ITENS");
 
        index = mListView.getFirstVisiblePosition();
 

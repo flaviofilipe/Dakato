@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="br.com.redewsouza.win7.dkatto.Activitys.AjudaActivity"
+    tools:showIn="@layout/activity_ajuda">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/shadowColor"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="O app da DKatto foi criado para facilitar a forma que os usuários fazem seus pedidos." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Com ele é possível:" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_margin="10dp"
+                    android:src="@android:drawable/checkbox_on_background" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Visualizar catalogo de intens." />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_margin="10dp"
+                    android:src="@android:drawable/checkbox_on_background" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Criar lista de pedidos." />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_margin="10dp"
+                    android:src="@android:drawable/checkbox_on_background" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Compartinhar lista com o fonecedor no WhatsApp." />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_ajudaLista"
+                style="@style/FirebaseUI.Button.NextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/com_facebook_messenger_blue"
+                android:text="Como criar lista de pedidos"/>
+
+            <Button
+                android:id="@+id/btn_ajudaVerCatalogo"
+                style="@style/FirebaseUI.Button.NextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/com_facebook_messenger_blue"
+                android:text="Como visualizar o catálogo"/>
+
+            <Button
+                android:id="@+id/btn_ajudaCompartilharItens"
+                style="@style/FirebaseUI.Button.NextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/com_facebook_messenger_blue"
+                android:text="Como enviar lista de pedidos"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

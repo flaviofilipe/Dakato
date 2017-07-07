@@ -69,6 +69,42 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="br.com.redewsouza.win7.dkatto.Activitys.VerPedidoActivity" />
         </activity>
+        <activity
+            android:name=".Activitys.AjudaActivity"
+            android:label="@string/title_activity_ajuda"
+            android:parentActivityName=".Activitys.MenuInicialActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.redewsouza.win7.dkatto.Activitys.MenuInicialActivity" />
+        </activity>
+        <activity
+            android:name=".Activitys.AjudaListaActivity"
+            android:label="@string/title_activity_ajuda_lista"
+            android:parentActivityName=".Activitys.AjudaActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.redewsouza.win7.dkatto.Activitys.AjudaActivity" />
+        </activity>
+        <activity
+            android:name=".Activitys.AjudaCatalogoActivity"
+            android:label="@string/title_activity_ajuda_catalogo"
+            android:parentActivityName=".Activitys.AjudaActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.redewsouza.win7.dkatto.Activitys.AjudaActivity" />
+        </activity>
+        <activity
+            android:name=".Activitys.AjudaEnvListaActivity"
+            android:label="@string/title_activity_ajuda_env_lista"
+            android:parentActivityName=".Activitys.AjudaActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.redewsouza.win7.dkatto.Activitys.AjudaActivity" />
+        </activity>
     </application>
 
 </manifest>

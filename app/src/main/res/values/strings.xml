@@ -15,5 +15,10 @@
     <string name="alerta_catalogo">Caso as imagens não apareça selecione o botão atualizar e verifique sua conexão.</string>
     <string name="alerta_pedidos">Para adicionar uma nova lista selecione o botão \'+\' no canto inferior direito</string>
     <string name="alerta_ver_pedido">Para adicionar um novo item selecione o botão \'+\' no canto inferior direito</string>
+    <string name="contato">Para mais informações entre em contato  Representante: (77)99997-3760  Fábrica: (77)99934-7373  Fixo: (77)3441-0886 Email: contato@dkatto.com.br</string>
+    <string name="title_activity_ajuda">Ajuda</string>
+    <string name="title_activity_ajuda_lista">Ajuda Lista</string>
+    <string name="title_activity_ajuda_catalogo">Ajuda Catalogo</string>
+    <string name="title_activity_ajuda_env_lista">Ajuda Enviar Lista</string>
 
 </resources>
